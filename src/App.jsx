@@ -214,7 +214,7 @@ const FadeInView = ({ children, delay = 0 }) => (
   <motion.div
     initial={{ opacity: 0, y: 15 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
+    viewport={{ once: true, margin: "-20px" }}
     transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
   >
     {children}
@@ -242,7 +242,7 @@ const LuxuryCard = ({ icon: Icon, title, desc, delay }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
+    viewport={{ once: true, margin: "-30px" }}
     transition={{ duration: 0.8, delay, ease: [0.21, 1, 0.36, 1] }}
   >
     <div className="group relative p-8 md:p-10 rounded-[2rem] bg-white/30 border border-white/50 hover:bg-white/50 transition-all duration-700">
@@ -402,13 +402,13 @@ const App = () => {
 
   const bgColor = useTransform(
     targetScrollProgress,
-    [0, 0.1, 0.2, 0.8, 0.9],
+    [0, 0.05, 0.15, 0.85, 0.95],
     ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
   );
 
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
-    [0.1, 0.2, 0.8, 0.9],
+    [0.05, 0.15, 0.85, 0.95],
     [0, 1, 1, 0]
   );
 
@@ -731,7 +731,7 @@ const App = () => {
                     <motion.div
                       initial={{ opacity: 0, x: -50 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <h2 className="text-3xl md:text-5xl mb-6 md:mb-8 leading-[1.1] italic text-chocolate">Une présence <span className="not-italic font-bold text-gold">indiscernable.</span></h2>
@@ -747,7 +747,7 @@ const App = () => {
                     <motion.div 
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: true, margin: "-30px" }}
                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                       className="relative aspect-[4/5] md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50"
                     >
