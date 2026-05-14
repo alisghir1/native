@@ -229,7 +229,7 @@ const useScrollYTransform = (range, output) => {
 const ProcessStep = ({ number, title, desc, delay }) => (
   <FadeInView delay={delay}>
     <div className="relative pl-12 md:pl-16 pb-12 md:pb-16 border-l border-white/10 last:pb-0">
-      <div className="absolute left-[-20px] top-0 w-10 h-10 rounded-full bg-cream text-chocolate flex items-center justify-center text-xs font-bold z-20 border-4 border-chocolate">
+      <div className="absolute left-[-20px] top-0 w-10 h-10 flex items-center justify-center text-sm md:text-base font-bold z-20 text-white">
         {number}
       </div>
       <h4 className="text-lg md:text-xl font-serif mb-3 md:mb-4 italic text-cream">{title}</h4>
@@ -393,8 +393,30 @@ const App = () => {
   const heroOpacity = useScrollYTransform([0, 0.3], [1, 0]);
   const heroScale = useScrollYTransform([0, 0.3], [1, 0.95]);
 
+  // Precise scroll-linked background color transition using a target ref
+  const targetRef = useRef(null);
+  const { scrollYProgress: targetScrollProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"]
+  });
+
+  const bgColor = useTransform(
+    targetScrollProgress,
+    [0, 0.1, 0.2, 0.8, 0.9],
+    ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
+  );
+
+  const darkBlockOpacity = useTransform(
+    targetScrollProgress,
+    [0.1, 0.2, 0.8, 0.9],
+    [0, 1, 1, 0]
+  );
+
   return (
-    <div className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] bg-[#F9F7F2] relative overflow-hidden">
+    <motion.div 
+      style={{ backgroundColor: bgColor }}
+      className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] relative overflow-hidden transition-colors duration-500"
+    >
       {/* Premium Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sand-light/30 rounded-full blur-[80px] md:blur-[120px] animate-float" />
@@ -547,57 +569,160 @@ const App = () => {
                 <Showcase />
               </div>
 
-              {/* Workflow Section */}
-              <section className="bg-chocolate text-cream py-20 md:py-32 relative overflow-hidden px-6">
-                <div className="container relative z-10">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
-                    <div className="lg:col-span-1">
-                      <FadeInView>
-                        <span className="text-taupe uppercase tracking-[0.4em] md:tracking-[0.6em] text-xs md:text-sm font-bold mb-6 block">The Methodology</span>
-                        <h2 className="text-3xl md:text-6xl text-cream mb-8 md:mb-10 leading-[1.1] italic">Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span></h2>
-                        <p className="text-cream/50 text-base md:text-lg mb-10 md:mb-12 leading-relaxed">
-                          Une technologie de pointe supervisée par l'œil humain. Pour un résultat indétectable, en un temps record.
-                        </p>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t border-white/10">
-                          {[
-                            { label: "Délai moyen", value: "24h" },
-                            { label: "Précision Lip-Sync", value: "99.9%" },
-                            { label: "Coût vs Tournage", value: "-85%" }
-                          ].map((stat, i) => (
-                            <div key={i} className="flex flex-col">
-                              <span className="text-2xl md:text-3xl font-serif italic text-gold mb-1">{stat.value}</span>
-                              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-cream/40">{stat.label}</span>
-                            </div>
-                          ))}
+              {/* Dark Integrated Block (Workflow + Comparison) */}
+              <div ref={targetRef} className="relative overflow-hidden">
+                {/* Unified Background Gradient with Grain/Dithering Effect */}
+                <motion.div 
+                  style={{ opacity: darkBlockOpacity }}
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(58,41,22,0.4)_0%,_transparent_70%)]" 
+                />
+                <motion.div 
+                  style={{ 
+                    opacity: darkBlockOpacity,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3C%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+                  }}
+                  className="absolute inset-0 pointer-events-none mix-blend-overlay" 
+                />
+
+                {/* Workflow Section */}
+                <section className="text-cream pt-24 pb-12 md:pt-32 md:pb-16 relative z-10 px-6">
+                  <div className="container relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
+                      <div className="lg:col-span-1">
+                        <FadeInView>
+                          <span className="text-taupe uppercase tracking-[0.4em] md:tracking-[0.6em] text-xs md:text-sm font-bold mb-6 block">The Methodology</span>
+                          <h2 className="text-3xl md:text-6xl text-cream mb-8 md:mb-10 leading-[1.1] italic">Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span></h2>
+                          <p className="text-cream/50 text-base md:text-lg mb-10 md:mb-12 leading-relaxed">
+                            Une technologie de pointe supervisée par l'œil humain. Pour un résultat indétectable, en un temps record.
+                          </p>
+                          
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t border-white/10">
+                            {[
+                              { label: "Délai moyen", value: "24h" },
+                              { label: "Précision Lip-Sync", value: "99.9%" },
+                              { label: "Coût vs Tournage", value: "-85%" }
+                            ].map((stat, i) => (
+                              <div key={i} className="flex flex-col">
+                                <span className="text-2xl md:text-3xl font-serif italic text-gold mb-1">{stat.value}</span>
+                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-cream/40">{stat.label}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </FadeInView>
+                      </div>
+                      <div className="lg:col-span-1 mt-10 lg:mt-0">
+                        <div className="space-y-4">
+                          <ProcessStep 
+                            number="01" 
+                            title="Adaptation Culturelle" 
+                            desc="On ne traduit pas, on adapte. Nous réécrivons votre script avec les expressions locales pour que votre message sonne vrai." 
+                            delay={0.2} 
+                          />
+                          <ProcessStep 
+                            number="02" 
+                            title="Clonage Vocal" 
+                            desc="Nous capturons l'essence de votre voix. Le résultat : Vous parlez une nouvelle langue en gardant votre propre timbre." 
+                            delay={0.4} 
+                          />
+                          <ProcessStep 
+                            number="03" 
+                            title="Synchro Labiale" 
+                            desc="Nous réalignons le mouvement de vos lèvres. Pour que la vidéo paraisse 100% organique, jamais artificielle." 
+                            delay={0.6} 
+                          />
                         </div>
-                      </FadeInView>
-                    </div>
-                    <div className="lg:col-span-1 mt-10 lg:mt-0">
-                      <div className="space-y-4">
-                        <ProcessStep 
-                          number="01" 
-                          title="Adaptation Culturelle" 
-                          desc="On ne traduit pas, on adapte. Nous réécrivons votre script avec les expressions locales pour que votre message sonne vrai." 
-                          delay={0.2} 
-                        />
-                        <ProcessStep 
-                          number="02" 
-                          title="Clonage Vocal" 
-                          desc="Nous capturons l'essence de votre voix. Le résultat : Vous parlez une nouvelle langue en gardant votre propre timbre." 
-                          delay={0.4} 
-                        />
-                        <ProcessStep 
-                          number="03" 
-                          title="Synchro Labiale" 
-                          desc="Nous réalignons le mouvement de vos lèvres. Pour que la vidéo paraisse 100% organique, jamais artificielle." 
-                          delay={0.6} 
-                        />
                       </div>
                     </div>
                   </div>
-                </div>
-              </section>
+                </section>
+
+                {/* Comparison Section - High Impact */}
+                <section className="pt-12 pb-24 md:pt-16 md:pb-40 px-6 text-cream relative z-10 overflow-hidden">
+                  <div className="container relative">
+                    {/* Background Accents */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[120px] -z-10" />
+                    
+                    <FadeInView>
+                      <div className="max-w-4xl mx-auto text-center mb-16 md:mb-20">
+                        <span className="text-gold uppercase tracking-[0.5em] text-[10px] md:text-xs font-black mb-6 block">Comparaison de Performance</span>
+                        <h2 className="text-4xl md:text-7xl text-cream mb-10 leading-[1.05] italic font-serif">
+                          Virae dépasse les <br />
+                          <span className="not-italic font-bold text-gold">limites du réel.</span>
+                        </h2>
+                        <div className="h-px w-24 bg-gold/30 mx-auto mb-10" />
+                        <p className="text-cream/60 text-lg md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+                          Pourquoi recruter 10 ambassadeurs quand <span className="text-cream italic">votre meilleur porte-parole, c'est vous-même ?</span>
+                        </p>
+                      </div>
+                    </FadeInView>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+                      {/* The Old Way */}
+                      <FadeInView delay={0.2}>
+                        <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-white/5 border border-white/10 h-full">
+                          <div className="mb-10">
+                            <h3 className="text-2xl md:text-3xl font-serif italic text-white/40 mb-2">Production Classique</h3>
+                            <p className="text-xs uppercase tracking-widest text-white/20 font-bold">(Recrutement d'influenceurs locaux)</p>
+                          </div>
+                          
+                          <ul className="space-y-8">
+                            {[
+                              { title: "Logistique Produits", desc: "Envois postaux, douanes bloquées, 4 semaines d'attente." },
+                              { title: "Coûts de Production", desc: "Nouveaux cachets et frais d'agences pour chaque pays." },
+                              { title: "Uniformité Créative", desc: "Chaque influenceur change votre message et votre image." },
+                              { title: "Vitesse de Déploiement", desc: "Lancement pays par pays. Processus lent et manuel." }
+                            ].map((item, i) => (
+                              <li key={i} className="flex gap-4">
+                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-white/20">
+                                  <X size={14} strokeWidth={3} />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <span className="text-[10px] uppercase tracking-widest font-black text-white/20">{item.title}</span>
+                                  <p className="text-sm md:text-base text-white/30 font-medium leading-relaxed">{item.desc}</p>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </FadeInView>
+
+                      {/* The Virae Way */}
+                      <FadeInView delay={0.4}>
+                        <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-gold text-chocolate h-full shadow-[0_0_60px_-15px_rgba(212,175,55,0.3)]">
+                          <div className="mb-10">
+                            <h3 className="text-2xl md:text-3xl font-serif italic font-bold mb-2">Technologie Virae</h3>
+                            <p className="text-[10px] uppercase tracking-widest opacity-60 font-bold">(Clonage IA Haute Performance)</p>
+                          </div>
+                          
+                          <ul className="space-y-8">
+                            {[
+                              { title: "Logistique Digitale", desc: "Zéro produit à envoyer. Vidéos prêtes en 48h chrono." },
+                              { title: "Coût de Mise à l'Échelle", desc: "Une seule production. Coût par langue divisé par 10." },
+                              { title: "Contrôle Absolu", desc: "Votre visage, votre voix. Identité de marque 100% préservée." },
+                              { title: "Déploiement Mondial", desc: "USA, Japon, Europe. Lancement simultané en 1 jour." }
+                            ].map((item, i) => (
+                              <li key={i} className="flex gap-4">
+                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-chocolate text-gold flex items-center justify-center shadow-lg">
+                                  <Sparkles size={14} strokeWidth={3} />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                  <span className="text-[10px] uppercase tracking-[0.2em] font-black opacity-60">{item.title}</span>
+                                  <p className="text-sm md:text-base font-bold leading-relaxed">{item.desc}</p>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <div className="mt-12 pt-8 border-t border-chocolate/10">
+                            <p className="text-xs font-black uppercase tracking-widest opacity-60 mb-2">Résultat</p>
+                            <p className="text-lg font-serif italic font-bold">Domination mondiale immédiate.</p>
+                          </div>
+                        </div>
+                      </FadeInView>
+                    </div>
+                  </div>
+                </section>
+              </div>
 
               {/* Expertise Section */}
               <section id="expertise" className="py-20 md:pt-28 md:pb-10 relative overflow-hidden px-6">
@@ -689,7 +814,7 @@ const App = () => {
               </section>
 
               {/* Pricing Section */}
-              <section id="tarifs" className="py-20 md:py-32 bg-white/20 px-6">
+              <section id="tarifs" className="py-20 md:py-32 px-6">
                 <div className="container">
                   <div className="text-center mb-16 md:mb-20">
                     <FadeInView>
@@ -936,7 +1061,7 @@ const App = () => {
               </section>
 
               {/* Quote Section */}
-              <section className="py-20 md:py-32 bg-white/30 backdrop-blur-sm px-6">
+              <section className="py-20 md:py-32 px-6">
                 <div className="container text-center">
                   <FadeInView>
                     <h2 className="text-2xl md:text-6xl font-serif italic max-w-5xl mx-auto mb-10 md:mb-16 text-chocolate leading-snug">
@@ -950,8 +1075,8 @@ const App = () => {
                 </div>
               </section>
 
-              {/* Footer */}
-              <footer className="pt-20 md:pt-32 pb-12 bg-chocolate text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
+              {/* Footer Section */}
+              <footer className="pt-20 md:pt-32 pb-12 text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
                 <div className="container relative z-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-24">
                     {/* Brand Column */}
@@ -1084,7 +1209,7 @@ const App = () => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
