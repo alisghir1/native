@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
+import WorldMap from './components/WorldMap.jsx';
 
 const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -624,9 +625,9 @@ const App = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative aspect-[4/5] md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50"
+                      className="relative w-full"
                     >
-                      <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-80" alt="Studio Virae" />
+                      <WorldMap />
                     </motion.div>
                   </div>
                 </div>
