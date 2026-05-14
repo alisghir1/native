@@ -72,9 +72,9 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           paddingRight: isScrolled ? (isMenuOpen ? 24 : 40) : 48,
           paddingTop: isScrolled ? 14 : 20,
           paddingBottom: isScrolled ? 14 : 20,
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: isScrolled ? 'blur(40px)' : 'blur(12px)',
-          boxShadow: isScrolled ? '0 20px 50px -15px rgba(41,28,14,0.15)' : 'none',
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: isScrolled ? 'blur(20px)' : 'blur(16px)',
+          boxShadow: isScrolled ? '0 20px 50px -15px rgba(41,28,14,0.1)' : 'none',
           borderWidth: 1,
           borderColor: 'rgba(255, 255, 255, 0.2)'
         }}
