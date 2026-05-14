@@ -493,7 +493,13 @@ const App = () => {
                         </span>
                         <div className="absolute inset-0 bg-brown-medium translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
                       </button>
-                      <button className="group flex items-center gap-3 text-chocolate font-bold uppercase tracking-widest text-[11px] md:text-[12px] hover:text-taupe transition-colors">
+                      <button 
+                        onClick={() => {
+                          const el = document.getElementById('showcase');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="group flex items-center gap-3 text-chocolate font-bold uppercase tracking-widest text-[11px] md:text-[12px] hover:text-taupe transition-colors"
+                      >
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-chocolate/20 flex items-center justify-center group-hover:bg-chocolate group-hover:text-cream transition-all duration-500">
                           <Play size={14} md:size={16} fill="currentColor" />
                         </div>
@@ -800,7 +806,10 @@ const App = () => {
                                     </li>
                                   ))}
                                 </ul>
-                                <button className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-chocolate text-cream hover:bg-taupe transition-all duration-500">
+                                <button 
+                                  onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
+                                  className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-chocolate text-cream hover:bg-taupe transition-all duration-500"
+                                >
                                   Lancer Scale
                                 </button>
                               </div>
@@ -842,7 +851,9 @@ const App = () => {
                                     </li>
                                   ))}
                                 </ul>
-                                <button className={`w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-500 ${
+                                <button 
+                                  onClick={() => { if (isBlitzAvailable) { setCurrentView('contact'); setActiveNav('contact'); } }}
+                                  className={`w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-500 ${
                                   isBlitzAvailable ? 'bg-gold text-chocolate hover:bg-white' : 'bg-white/10 text-white/30'
                                 }`}>
                                   Lancer Blitz
@@ -873,7 +884,10 @@ const App = () => {
                                     </li>
                                   ))}
                                 </ul>
-                                <button className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white border border-chocolate/10 text-chocolate hover:bg-chocolate hover:text-cream transition-all duration-500">
+                                <button 
+                                  onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
+                                  className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white border border-chocolate/10 text-chocolate hover:bg-chocolate hover:text-cream transition-all duration-500"
+                                >
                                   Contacter
                                 </button>
                               </div>
@@ -929,7 +943,7 @@ const App = () => {
                       </p>
                       <div className="flex gap-4">
                         {['Instagram', 'LinkedIn', 'X'].map((social) => (
-                          <a key={social} href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500">
+                          <a key={social} href={`https://${social.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500">
                             {social[0]}
                           </a>
                         ))}
@@ -943,9 +957,29 @@ const App = () => {
                         <ul className="space-y-3 md:space-y-4">
                           {['Accueil', 'Expertise', 'Tarifs', 'Contact'].map((item) => (
                             <li key={item}>
-                              <a href={`#${item.toLowerCase()}`} className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300">
+                              <button 
+                                onClick={() => {
+                                  if (item === 'Contact') {
+                                    setCurrentView('contact');
+                                    setActiveNav('contact');
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                  } else {
+                                    setCurrentView('landing');
+                                    setActiveNav(item.toLowerCase());
+                                    setTimeout(() => {
+                                      if (item === 'Accueil') {
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                      } else {
+                                        const el = document.getElementById(item.toLowerCase());
+                                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                                      }
+                                    }, 100);
+                                  }
+                                }}
+                                className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300 text-left"
+                              >
                                 {item}
-                              </a>
+                              </button>
                             </li>
                           ))}
                         </ul>
@@ -989,9 +1023,13 @@ const App = () => {
                     </div>
                     <div className="flex gap-6 md:gap-8">
                       {['Mentions Légales', 'Confidentialité', 'Cookies'].map((item) => (
-                        <a key={item} href="#" className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity">
+                        <button 
+                          key={item} 
+                          onClick={() => alert(`Page "${item}" en cours de rédaction.`)}
+                          className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity"
+                        >
                           {item}
-                        </a>
+                        </button>
                       ))}
                     </div>
                   </div>
