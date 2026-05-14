@@ -412,7 +412,7 @@ const App = () => {
   const bgColor = useTransform(
     targetScrollProgress,
     isMobile 
-      ? [0, 0.02, 0.1, 0.9, 0.98] // Mobile: triggers earlier
+      ? [0, 0.02, 0.1, 0.8, 0.88] // Mobile: triggers earlier and ends earlier
       : [0, 0.05, 0.15, 0.85, 0.95], // Desktop: kept as is
     isMobile
       ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"] // Mobile: darker (#0D0A07)
@@ -422,7 +422,7 @@ const App = () => {
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
     isMobile
-      ? [0.02, 0.1, 0.9, 0.98]
+      ? [0.02, 0.1, 0.8, 0.88]
       : [0.05, 0.15, 0.85, 0.95],
     [0, 1, 1, 0]
   );
