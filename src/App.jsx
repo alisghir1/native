@@ -641,8 +641,8 @@ const App = () => {
                   </FadeInView>
                 </div>
                 
-                <div className="container mx-auto px-4 md:px-12">
-                  <div className="relative flex w-full overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+                <div className="w-full max-w-[1600px] mx-auto px-4">
+                  <div className="relative flex w-full overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
                     <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0">
                       {[1, 2, 3, 4, 5, 6].map((i) => (
                         <PhoneMockup 
