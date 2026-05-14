@@ -813,7 +813,7 @@ const App = () => {
               </section>
 
               {/* Pricing Section */}
-              <section id="tarifs" className="py-20 md:py-32 px-2 md:px-6">
+              <section id="tarifs" className="pt-20 md:pt-32 pb-10 md:pb-16 px-2 md:px-6">
                 <div className="container mx-auto">
                   <div className="text-center mb-16 md:mb-20">
                     <FadeInView>
@@ -1057,7 +1057,7 @@ const App = () => {
               </section>
 
               {/* Quote Section */}
-              <section className="py-20 md:py-32 px-6">
+              <section className="pt-10 md:pt-16 pb-20 md:pb-32 px-6">
                 <div className="container text-center">
                   <FadeInView>
                     <h2 className="text-2xl md:text-6xl font-serif italic max-w-5xl mx-auto mb-10 md:mb-16 text-chocolate leading-snug">
