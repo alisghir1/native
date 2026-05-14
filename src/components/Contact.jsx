@@ -1,31 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Mail, MapPin, Phone, Calendar, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, ArrowRight } from 'lucide-react';
 
-const Contact = ({ onBack }) => {
+const Contact = () => {
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-[#F9F7F2] text-[#291C0E] pt-28 md:pt-32 pb-16 md:pb-20 relative overflow-hidden px-6"
+      className="min-h-screen text-[#291C0E] pt-32 md:pt-40 pb-16 md:pb-20 relative overflow-hidden px-6"
     >
-      {/* Background Decorative Blobs */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sand-light/20 rounded-full blur-[80px] md:blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-taupe/10 rounded-full blur-[70px] md:blur-[100px]" />
-      </div>
-
-      <div className="container relative z-10">
-        {/* Back Button */}
-        <button 
-          onClick={onBack}
-          className="group flex items-center gap-3 text-chocolate/40 hover:text-chocolate font-bold uppercase tracking-[0.2em] text-[10px] mb-8 md:mb-12 transition-colors"
-        >
-          <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-          Retour à l'accueil
-        </button>
-
+      <div className="container relative z-10 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-start">
           {/* Left Column: Narrative */}
           <motion.div
