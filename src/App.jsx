@@ -73,11 +73,10 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           paddingRight: isScrolled ? (isMenuOpen ? 24 : 40) : 48,
           paddingTop: isScrolled ? 14 : 20,
           paddingBottom: isScrolled ? 14 : 20,
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.7)' : 'rgba(255, 255, 255, 0.4)',
-          backdropFilter: isScrolled ? 'blur(20px)' : 'blur(16px)',
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.75)' : 'rgba(255, 255, 255, 0.4)',
           boxShadow: isScrolled ? '0 20px 50px -15px rgba(41,28,14,0.1)' : 'none',
           borderWidth: 1,
-          borderColor: 'rgba(255, 255, 255, 0.2)'
+          borderColor: 'rgba(255, 255, 255, 0.4)'
         }}
         transition={{ 
           type: 'spring',
@@ -85,7 +84,7 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           damping: 25,
           mass: 1
         }}
-        className="pointer-events-auto flex flex-col justify-center items-center overflow-hidden"
+        className="pointer-events-auto flex flex-col justify-center items-center overflow-hidden backdrop-blur-xl"
       >
         <div className="flex items-center justify-between w-full">
           {/* Left: Logo */}
