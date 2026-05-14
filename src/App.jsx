@@ -453,7 +453,7 @@ const App = () => {
                               >
                                 <div className="text-[10px] md:text-[11px] leading-relaxed text-chocolate/80 normal-case tracking-normal font-medium text-left">
                                   <p className="font-bold mb-2 text-chocolate uppercase tracking-widest text-[9px] md:text-[10px]">Définition</p>
-                                  Plus qu'une traduction, la transcréation adapte votre message aux codes culturels locaux tout en préservant votre identité vocale et visuelle grâce à notre IA neuronale.
+                                  Plus qu'une traduction, la transcréation adapte votre message aux codes culturels locaux tout en préservant votre identité vocale et visuelle grâce à notre technologie d'IA.
                                 </div>
                                 <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-chocolate/10 rotate-45" />
                               </motion.div>
@@ -580,7 +580,7 @@ const App = () => {
                       <h2 className="text-3xl md:text-5xl mb-6 md:mb-8 leading-[1.1] italic text-chocolate">Une présence <span className="not-italic font-bold text-gold">indiscernable.</span></h2>
                       <div className="space-y-4 md:space-y-6 text-sm md:text-base text-chocolate/60 mb-10 leading-relaxed font-medium max-w-lg">
                         <p>
-                          Là où la technologie traditionnelle se heurte à la "vallée de l'étrange", Virae franchit la frontière de l'invisible. Notre processus est une reconstruction neuronale de l'âme de votre message.
+                          Là où la technologie traditionnelle se heurte à la "vallée de l'étrange", Virae franchit la frontière de l'invisible. Notre processus est une restitution fidèle de l'essence de votre message.
                         </p>
                         <p>
                           Chaque micro-expression et chaque respiration sont réanalysées pour s'adapter organiquement à la nouvelle langue. Le résultat est une nouvelle version originale de vous-même.
@@ -647,7 +647,7 @@ const App = () => {
                     </FadeInView>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                    <LuxuryCard icon={Mic} title="Clonage Neural" desc="Réplication parfaite du timbre." delay={0.1} />
+                    <LuxuryCard icon={Mic} title="Clonage Vocal" desc="Réplication parfaite du timbre." delay={0.1} />
                     <LuxuryCard icon={Globe} title="Transcréation" desc="Adaptation culturelle profonde." delay={0.2} />
                     <LuxuryCard icon={Sparkles} title="Lip-Sync Pro" desc="Synchronisation labiale au pixel près." delay={0.3} />
                   </div>
@@ -664,69 +664,246 @@ const App = () => {
                     </FadeInView>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
-                    {[
-                      {
-                        name: "Essentiel",
-                        price: "1 250",
-                        desc: "Parfait pour tester un nouveau marché avec vos meilleurs UGC.",
-                        features: ["3 Vidéos Transcréées", "Lip-Sync Précision Standard", "Clonage Vocal Inclus", "Livraison 72h", "1 Langue au choix"],
-                        highlight: false
-                      },
-                      {
-                        name: "Studio",
-                        price: "3 500",
-                        desc: "La solution complète pour les marques en pleine expansion.",
-                        features: ["10 Vidéos Transcréées", "Lip-Sync Précision Neuronale", "Adaptation Culturelle Profonde", "Livraison 48h", "3 Langues incluses", "Support Dédié"],
-                        highlight: true
-                      },
-                      {
-                        name: "Héritage",
-                        price: "Sur mesure",
-                        desc: "Une production haute couture pour une domination globale.",
-                        features: ["Volume Illimité", "Qualité Cinématographique", "Localisation de Script Expert", "Livraison Priority (24h)", "Langues Illimitées", "Stratégie Native Complète"],
-                        highlight: false
-                      }
-                    ].map((plan, i) => (
-                      <FadeInView key={i} delay={i * 0.1}>
-                        <div className={`relative p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] h-full flex flex-col transition-all duration-700 ${
-                          plan.highlight 
-                            ? 'bg-chocolate text-cream shadow-2xl scale-100 lg:scale-105 z-10' 
-                            : 'bg-white/40 border border-white/50 hover:bg-white/60'
-                        }`}>
-                          {plan.highlight && (
-                            <span className="absolute top-6 right-8 md:right-10 bg-gold text-chocolate text-[9px] md:text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full">
-                              Conseillé
-                            </span>
-                          )}
-                          <h3 className={`text-xl md:text-2xl font-serif italic mb-4 ${plan.highlight ? 'text-gold' : 'text-chocolate'}`}>{plan.name}</h3>
-                          <div className="mb-6 md:mb-8">
-                            <span className="text-3xl md:text-4xl font-bold tracking-tighter">
-                              {plan.price === "Sur mesure" ? plan.price : `€${plan.price}`}
-                            </span>
-                            {plan.price !== "Sur mesure" && <span className={`text-xs md:text-sm ml-2 ${plan.highlight ? 'opacity-50' : 'opacity-40'}`}>/pack</span>}
-                          </div>
-                          <p className={`text-sm mb-8 md:mb-10 leading-relaxed font-medium ${plan.highlight ? 'opacity-70' : 'opacity-50'}`}>
-                            {plan.desc}
-                          </p>
-                          <ul className="space-y-4 mb-10 md:mb-12 flex-grow">
-                            {plan.features.map((feature, idx) => (
-                              <li key={idx} className="flex items-center gap-3 text-[12px] md:text-[13px] font-medium">
-                                <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${plan.highlight ? 'bg-gold' : 'bg-chocolate/20'}`} />
-                                <span className={plan.highlight ? 'opacity-90' : 'opacity-70'}>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <button className={`w-full py-4 md:py-5 rounded-full text-[11px] md:text-[12px] font-bold uppercase tracking-widest transition-all duration-500 ${
-                            plan.highlight 
-                              ? 'bg-gold text-chocolate hover:bg-white hover:text-chocolate' 
-                              : 'bg-chocolate text-cream hover:bg-taupe'
-                          }`}>
-                            Choisir ce plan
-                          </button>
+                  {/* Dynamic Pricing Selector */}
+                  <div className="mb-20">
+                    <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-xl rounded-[3rem] p-8 md:p-12 border border-white/50 shadow-2xl">
+                      <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                        <div className="text-center md:text-left">
+                          <h3 className="text-2xl md:text-3xl font-serif italic text-chocolate mb-2">Configurez votre expansion.</h3>
+                          <p className="text-sm text-chocolate/50 font-medium">Choisissez le volume de vidéos transcréées dont vous avez besoin.</p>
                         </div>
-                      </FadeInView>
-                    ))}
+                        <div className="flex items-center gap-4 bg-chocolate/5 px-6 py-3 rounded-2xl border border-chocolate/5">
+                          <span className="text-3xl md:text-4xl font-bold text-chocolate tabular-nums">
+                            {(() => {
+                              const [count, setCount] = useState(5);
+                              useEffect(() => {
+                                const handleCount = (e) => setCount(e.detail);
+                                window.addEventListener('videoCountChange', handleCount);
+                                return () => window.removeEventListener('videoCountChange', handleCount);
+                              }, []);
+                              return count;
+                            })()}
+                          </span>
+                          <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-taupe leading-tight">
+                            Vidéos<br />Transcréées
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="relative h-12 flex items-center mb-16">
+                        {/* Custom Slider Styling */}
+                        <style>{`
+                          .pricing-slider {
+                            -webkit-appearance: none;
+                            width: 100%;
+                            height: 6px;
+                            background: rgba(41, 28, 14, 0.1);
+                            border-radius: 10px;
+                            outline: none;
+                            cursor: pointer;
+                          }
+                          .pricing-slider::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            width: 28px;
+                            height: 28px;
+                            background: #291C0E;
+                            border: 4px solid #F9F7F2;
+                            border-radius: 50%;
+                            box-shadow: 0 10px 20px rgba(41,28,14,0.2);
+                            transition: all 0.3s ease;
+                          }
+                          .pricing-slider::-webkit-slider-thumb:hover {
+                            transform: scale(1.1);
+                            box-shadow: 0 15px 30px rgba(41,28,14,0.3);
+                          }
+                        `}</style>
+                        <input 
+                          type="range" 
+                          min="1" 
+                          max="20" 
+                          defaultValue="5"
+                          className="pricing-slider"
+                          id="video-range"
+                          onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            const event = new CustomEvent('videoCountChange', { detail: val });
+                            window.dispatchEvent(event);
+                          }}
+                        />
+                        <div className="absolute top-10 left-0 right-0 h-6">
+                          {[1, 5, 10, 15, 20].map(val => {
+                            const percent = (val - 1) / 19;
+                            return (
+                              <span 
+                                key={val} 
+                                className="absolute text-[10px] font-black text-chocolate/30 -translate-x-1/2"
+                                style={{ 
+                                  left: `calc(${percent * 100}% + ${(14 - percent * 28)}px)` 
+                                }}
+                              >
+                                {val}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {(() => {
+                          const [videoCount, setVideoCount] = useState(5);
+                          useEffect(() => {
+                            const handleCount = (e) => setVideoCount(e.detail);
+                            window.addEventListener('videoCountChange', handleCount);
+                            return () => window.removeEventListener('videoCountChange', handleCount);
+                          }, []);
+
+                          // Pricing: 85/vid + 95 setup for Scale, 95/vid (all-in) for Blitz
+                          const scalePrice = (videoCount * 85) + 95;
+                          const blitzPrice = videoCount * 95;
+                          const isBlitzAvailable = videoCount >= 5;
+
+                          // Realistic Non-linear Delivery Logic
+                          // Scale: Standard queue
+                          const getScaleDelivery = (count) => {
+                            if (count === 1) return "24h";
+                            if (count === 2) return "48h";
+                            if (count <= 4) return "72h";
+                            return `${Math.floor(count * 0.8)} jours`;
+                          };
+
+                          // Blitz: Priority queue - Faster than scale for same volume
+                          const getBlitzDelivery = (count) => {
+                            if (count <= 6) return "48h"; 
+                            if (count <= 12) return "72h";
+                            return "4 jours";
+                          };
+
+                          return (
+                            <>
+                              {/* Scale Express Card */}
+                              <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/60 border border-chocolate/5 flex flex-col transition-all duration-500 hover:shadow-xl">
+                                <div className="mb-8">
+                                  <div className="flex justify-between items-start mb-2">
+                                    <h3 className="text-xl md:text-2xl font-serif italic text-chocolate">Scale Express</h3>
+                                    <span className="text-[10px] font-black text-taupe bg-taupe/10 px-2 py-1 rounded-md">Standard</span>
+                                  </div>
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter tabular-nums">€{scalePrice}</span>
+                                  </div>
+                                  <p className="text-[9px] font-black uppercase tracking-widest text-chocolate/40 mt-1">
+                                    95€ Empreinte IA + {videoCount * 85}€ vidéos
+                                  </p>
+                                </div>
+                                <ul className="space-y-3 mb-10 flex-grow">
+                                  {[
+                                    `${videoCount} Vidéo${videoCount > 1 ? 's' : ''} (jusqu'à 60s)`,
+                                    `Livraison : ${getScaleDelivery(videoCount)}`,
+                                    "Création Empreinte Vocale (95€)",
+                                    "Précision Lip-Sync Standard",
+                                    "Support par Email"
+                                  ].map((f, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70">
+                                      <div className={`w-1.5 h-1.5 rounded-full ${i === 1 ? 'bg-orange-400' : 'bg-chocolate/20'}`} />
+                                      {f}
+                                    </li>
+                                  ))}
+                                </ul>
+                                <button className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-chocolate text-cream hover:bg-taupe transition-all duration-500">
+                                  Lancer Scale
+                                </button>
+                              </div>
+
+                              {/* Global Blitz Card */}
+                              <div className={`p-8 md:p-10 rounded-[2.5rem] flex flex-col transition-all duration-700 ${
+                                isBlitzAvailable 
+                                  ? 'bg-chocolate text-cream shadow-2xl scale-105 z-10 border border-gold/30' 
+                                  : 'bg-white/20 opacity-40 grayscale pointer-events-none'
+                              }`}>
+                                {isBlitzAvailable && (
+                                  <div className="flex justify-between items-center mb-6">
+                                    <span className="bg-gold text-chocolate text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-full w-fit">
+                                      Plus Populaire
+                                    </span>
+                                    <span className="text-[10px] font-black text-gold">Haute Précision</span>
+                                  </div>
+                                )}
+                                <div className="mb-8">
+                                  <h3 className={`text-xl md:text-2xl font-serif italic mb-2 ${isBlitzAvailable ? 'text-gold' : 'text-chocolate'}`}>Global Blitz</h3>
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter tabular-nums">€{blitzPrice}</span>
+                                  </div>
+                                  <p className={`text-[10px] font-black uppercase tracking-widest ${isBlitzAvailable ? 'opacity-40' : 'opacity-30'}`}>
+                                    {isBlitzAvailable ? "0€ Empreinte — Qualité Studio +" : "Disponible dès 5 vidéos"}
+                                  </p>
+                                </div>
+                                <ul className="space-y-3 mb-10 flex-grow">
+                                  {[
+                                    `${videoCount} Vidéos Transcréées (jusqu'à 60s)`,
+                                    `Livraison Prioritaire : ${getBlitzDelivery(videoCount)}`,
+                                    "1 Hook Alternatif OFFERT / vidéo",
+                                    "Adaptation Culturelle du Script",
+                                    "Empreinte Vocale OFFERTE"
+                                  ].map((f, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium">
+                                      <div className={`w-1.5 h-1.5 rounded-full ${isBlitzAvailable ? (i === 1 ? 'bg-gold animate-pulse' : 'bg-gold') : 'bg-chocolate/20'}`} />
+                                      <span className={isBlitzAvailable ? 'opacity-90' : 'opacity-70'}>{f}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                                <button className={`w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-500 ${
+                                  isBlitzAvailable ? 'bg-gold text-chocolate hover:bg-white' : 'bg-white/10 text-white/30'
+                                }`}>
+                                  Lancer Blitz
+                                </button>
+                              </div>
+
+                              {/* Empire Growth Card */}
+                              <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/40 border border-white/50 flex flex-col">
+                                <div className="mb-8">
+                                  <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Empire Growth</h3>
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter">€2 490</span>
+                                    <span className="text-xs ml-1 opacity-40">/mois</span>
+                                  </div>
+                                  <p className="text-[10px] font-black uppercase tracking-widest text-chocolate/30">Volume Illimité</p>
+                                </div>
+                                <ul className="space-y-3 mb-10 flex-grow">
+                                  {[
+                                    "30 Vidéos / mois (jusqu'à 60s)",
+                                    "A/B Testing Hook Illimité",
+                                    "Expertise Scripting Local",
+                                    "Chef de Projet Dédié",
+                                    "Creative Strategy"
+                                  ].map((f, i) => (
+                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-chocolate/20" />
+                                      {f}
+                                    </li>
+                                  ))}
+                                </ul>
+                                <button className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white border border-chocolate/10 text-chocolate hover:bg-chocolate hover:text-cream transition-all duration-500">
+                                  Contacter
+                                </button>
+                              </div>
+                            </>
+                          );
+                        })()}
+                      </div>
+
+                      {/* Risk Reversal Guarantee */}
+                      <div className="max-w-2xl mx-auto mt-12 bg-white/30 border border-chocolate/10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4 text-center md:text-left shadow-sm">
+                        <div className="w-12 h-12 rounded-full bg-gold/20 text-gold flex items-center justify-center shrink-0 border border-gold/30">
+                          <Sparkles size={20} />
+                        </div>
+                        <div>
+                          <p className="text-[11px] md:text-xs font-bold text-chocolate uppercase tracking-widest mb-1">Garantie Indétectable</p>
+                          <p className="text-[10px] md:text-[11px] text-chocolate/70 font-medium leading-relaxed">
+                            Si la synchronisation labiale n'est pas 100% naturelle et bluffante, nous régénérons votre vidéo gratuitement jusqu'à perfection absolue. Vous ne prenez aucun risque.
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </section>
