@@ -62,7 +62,7 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
   return (
     <div className="fixed top-0 left-0 w-full flex justify-center z-50 pointer-events-none px-4">
       <motion.nav 
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -20, opacity: 0, width: '100%', maxWidth: '1400px' }}
         animate={{ 
           y: isScrolled ? 24 : 0, 
           opacity: 1,
@@ -812,26 +812,9 @@ const App = () => {
                 </div>
               </section>
 
-              {/* Services Section */}
-              <section className="py-16 md:py-28 px-6">
-                <div className="container">
-                  <div className="text-center mb-12 md:mb-16">
-                    <FadeInView>
-                      <h2 className="text-3xl md:text-4xl mb-3 md:mb-4 font-light italic text-chocolate">Artisanat Digital.</h2>
-                      <p className="text-[10px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.4em] font-black text-taupe">Elite Services</p>
-                    </FadeInView>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                    <LuxuryCard icon={Mic} title="Clonage Vocal" desc="Réplication parfaite du timbre." delay={0.1} />
-                    <LuxuryCard icon={Globe} title="Transcréation" desc="Adaptation culturelle profonde." delay={0.2} />
-                    <LuxuryCard icon={Sparkles} title="Lip-Sync Pro" desc="Synchronisation labiale au pixel près." delay={0.3} />
-                  </div>
-                </div>
-              </section>
-
               {/* Pricing Section */}
-              <section id="tarifs" className="py-20 md:py-32 px-6">
-                <div className="container">
+              <section id="tarifs" className="py-20 md:py-32 px-2 md:px-6">
+                <div className="container mx-auto">
                   <div className="text-center mb-16 md:mb-20">
                     <FadeInView>
                       <h2 className="text-3xl md:text-6xl font-serif italic mb-4 md:mb-6 text-chocolate">Investissez dans votre <span className="not-italic text-gold">omniprésence.</span></h2>
@@ -841,7 +824,7 @@ const App = () => {
 
                   {/* Dynamic Pricing Selector */}
                   <div className="mb-20">
-                    <div className="max-w-4xl mx-auto bg-white/40 backdrop-blur-xl rounded-[3rem] p-8 md:p-12 border border-white/50 shadow-2xl">
+                    <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-xl rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 border border-white/50 shadow-2xl">
                       <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
                         <div className="text-center md:text-left">
                           <h3 className="text-2xl md:text-3xl font-serif italic text-chocolate mb-2">Configurez votre expansion.</h3>
@@ -941,8 +924,7 @@ const App = () => {
                           return (
                             <>
                               {/* Scale Express Card */}
-                              <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/60 border border-chocolate/5 flex flex-col transition-all duration-500 hover:shadow-xl">
-                                <div className="mb-8">
+                              <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/60 border border-chocolate/5 flex flex-col transition-all duration-500 hover:shadow-xl">                                <div className="mb-8">
                                   <div className="flex justify-between items-start mb-2">
                                     <h3 className="text-xl md:text-2xl font-serif italic text-chocolate">Scale Express</h3>
                                     <span className="text-[10px] font-black text-taupe bg-taupe/10 px-2 py-1 rounded-md">Standard</span>
@@ -977,8 +959,7 @@ const App = () => {
                               </div>
 
                               {/* Global Blitz Card */}
-                              <div className={`p-8 md:p-10 rounded-[2.5rem] flex flex-col transition-all duration-700 ${
-                                isBlitzAvailable 
+                              <div className={`p-6 md:p-10 rounded-[2.5rem] flex flex-col transition-all duration-700 ${                                isBlitzAvailable 
                                   ? 'bg-chocolate text-cream shadow-2xl scale-105 z-10 border border-gold/30' 
                                   : 'bg-white/20 opacity-40 grayscale pointer-events-none'
                               }`}>
@@ -1023,8 +1004,7 @@ const App = () => {
                               </div>
 
                               {/* Empire Growth Card */}
-                              <div className="p-8 md:p-10 rounded-[2.5rem] bg-white/40 border border-white/50 flex flex-col">
-                                <div className="mb-8">
+                              <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/40 border border-white/50 flex flex-col">                                <div className="mb-8">
                                   <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Empire Growth</h3>
                                   <div className="flex items-baseline gap-1">
                                     <span className="text-3xl md:text-4xl font-bold tracking-tighter">€2 490</span>
