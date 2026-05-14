@@ -9,7 +9,8 @@ import {
   Sparkles, 
   Star, 
   Menu, 
-  X 
+  X,
+  Check 
 } from 'lucide-react';
 import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
@@ -716,8 +717,8 @@ const App = () => {
                               { title: "Déploiement Mondial", desc: "USA, Japon, Europe. Lancement simultané en 1 jour." }
                             ].map((item, i) => (
                               <li key={i} className="flex gap-4">
-                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-chocolate text-gold flex items-center justify-center shadow-lg">
-                                  <Sparkles size={14} strokeWidth={3} />
+                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-chocolate text-cream flex items-center justify-center shadow-lg">
+                                  <Check size={14} strokeWidth={3} />
                                 </div>
                                 <div className="flex flex-col gap-1">
                                   <span className="text-[10px] uppercase tracking-[0.2em] font-black opacity-60">{item.title}</span>
