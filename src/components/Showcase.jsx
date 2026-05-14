@@ -182,7 +182,13 @@ const Showcase = () => {
                 Transformez votre contenu le plus performant en une armada de publicités Virae pour TikTok, Meta et YouTube Ads. Sans jamais retourner une seule image.
               </p>
               
-              <button className="w-full md:w-auto group relative bg-studio-brown text-white px-10 py-4 md:py-5 rounded-full text-[13px] md:text-[14px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-500 shadow-2xl hover:shadow-studio-brown/20 hover:-translate-y-1">
+              <button 
+                onClick={() => {
+                  const event = new CustomEvent('navigateToView', { detail: 'contact' });
+                  window.dispatchEvent(event);
+                }}
+                className="w-full md:w-auto group relative bg-studio-brown text-white px-10 py-4 md:py-5 rounded-full text-[13px] md:text-[14px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-500 shadow-2xl hover:shadow-studio-brown/20 hover:-translate-y-1"
+              >
                 <span className="relative z-10 flex items-center justify-center gap-3">
                   Déployer votre Vision <ArrowRight size={20} />
                 </span>

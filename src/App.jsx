@@ -343,6 +343,18 @@ const App = () => {
   const [videoCount, setVideoCount] = useState(5);
 
   useEffect(() => {
+    const handleNavigation = (e) => {
+      if (e.detail === 'contact') {
+        setCurrentView('contact');
+        setActiveNav('contact');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('navigateToView', handleNavigation);
+    return () => window.removeEventListener('navigateToView', handleNavigation);
+  }, []);
+
+  useEffect(() => {
     const handleCount = (e) => setVideoCount(e.detail);
     window.addEventListener('videoCountChange', handleCount);
     return () => window.removeEventListener('videoCountChange', handleCount);
@@ -526,7 +538,9 @@ const App = () => {
                 </div>
               </section>
 
-              <Showcase />
+              <div id="showcase">
+                <Showcase />
+              </div>
 
               {/* Workflow Section */}
               <section className="bg-chocolate text-cream py-20 md:py-32 relative overflow-hidden px-6">
@@ -989,9 +1003,19 @@ const App = () => {
                         <ul className="space-y-3 md:space-y-4">
                           {['Clonage Vocal', 'Synchro Labiale', 'Transcréation UGC', 'Production Native'].map((item) => (
                             <li key={item}>
-                              <a href="#" className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300">
+                              <button 
+                                onClick={() => {
+                                  setCurrentView('landing');
+                                  setActiveNav('expertise');
+                                  setTimeout(() => {
+                                    const el = document.getElementById('expertise');
+                                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                                  }, 100);
+                                }}
+                                className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300 text-left"
+                              >
                                 {item}
-                              </a>
+                              </button>
                             </li>
                           ))}
                         </ul>
