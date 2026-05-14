@@ -420,12 +420,12 @@ const App = () => {
                 style={{ opacity: heroOpacity, scale: heroScale }}
                 className="relative pt-40 pb-20 md:pt-32 md:pb-12 overflow-hidden min-h-[90vh] md:min-h-[80vh] flex items-center justify-center px-4"
               >
-                <div className="container relative z-10 flex flex-col items-center text-center">
+                <div className="container relative z-10 flex flex-col items-center text-center px-2 md:px-4">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center"
+                    className="flex flex-col items-center w-full"
                   >
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
                       <div className="flex -space-x-3 md:-space-x-4">
@@ -450,7 +450,7 @@ const App = () => {
                       </div>
                     </div>
 
-                    <span className="inline-flex items-center gap-2 md:gap-3 text-[10px] md:text-[13px] font-black uppercase tracking-[0.5em] md:tracking-[0.8em] text-taupe mb-6 relative">
+                    <span className="inline-flex items-center gap-2 md:gap-3 text-[11px] md:text-[13px] font-black uppercase tracking-[0.5em] md:tracking-[0.8em] text-taupe mb-6 relative">
                       <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
                       <span className="hover:text-chocolate transition-colors duration-300">
                         <span 
@@ -484,14 +484,14 @@ const App = () => {
                       <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
                     </span>
                     
-                    <h1 className="text-4xl md:text-7xl lg:text-[85px] font-serif leading-[1.1] md:leading-[0.95] tracking-tighter mb-8 md:mb-10 text-chocolate max-w-5xl italic">
-                      Exportez vos publicités UGC <br />
+                    <h1 className="text-[40px] md:text-7xl lg:text-[85px] font-serif leading-[1] md:leading-[0.95] tracking-tighter mb-8 md:mb-10 text-chocolate max-w-5xl italic px-1">
+                      Transformez vos meilleurs UGC <br />
                       <span className="not-italic opacity-90 text-gold relative">
-                        et conquérez le monde en 24h.
+                        en machines à conversion internationales.
                       </span>
                     </h1>
                     
-                    <p className="text-sm md:text-xl text-chocolate/60 max-w-2xl md:max-w-3xl mb-10 md:mb-12 leading-relaxed font-medium px-4">
+                    <p className="text-base md:text-xl text-chocolate/60 max-w-2xl md:max-w-3xl mb-10 md:mb-12 leading-relaxed font-medium px-2 md:px-4">
                       Propulsez vos publicités UGC sur de nouveaux marchés en 24h. Notre IA synchronise votre voix et vos lèvres avec un réalisme chirurgical, un rendu organique indétectable pour une conversion locale maximale.
                     </p>
                     
