@@ -485,9 +485,9 @@ const App = () => {
                     </span>
                     
                     <h1 className="text-4xl md:text-7xl lg:text-[85px] font-serif leading-[1.1] md:leading-[0.95] tracking-tighter mb-8 md:mb-10 text-chocolate max-w-5xl italic">
-                      Parlez au monde entier <br />
+                      Exportez vos publicités UGC <br />
                       <span className="not-italic opacity-90 text-gold relative">
-                        sans retourner une image.
+                        et conquérez le monde en 24h.
                       </span>
                     </h1>
                     
