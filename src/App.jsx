@@ -73,10 +73,12 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           paddingRight: isScrolled ? (isMenuOpen ? 24 : 40) : 48,
           paddingTop: isScrolled ? 14 : 20,
           paddingBottom: isScrolled ? 14 : 20,
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.75)' : 'rgba(255, 255, 255, 0.4)',
-          boxShadow: isScrolled ? '0 20px 50px -15px rgba(41,28,14,0.1)' : 'none',
+          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0)',
+          backdropFilter: isScrolled ? 'blur(40px) saturate(200%)' : 'blur(0px)',
+          WebkitBackdropFilter: isScrolled ? 'blur(40px) saturate(200%)' : 'blur(0px)',
+          boxShadow: isScrolled ? '0 20px 50px -15px rgba(0,0,0,0.1)' : 'none',
           borderWidth: 1,
-          borderColor: 'rgba(255, 255, 255, 0.4)'
+          borderColor: isScrolled ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0)'
         }}
         transition={{ 
           type: 'spring',
@@ -84,7 +86,7 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           damping: 25,
           mass: 1
         }}
-        className="pointer-events-auto flex flex-col justify-center items-center overflow-hidden backdrop-blur-xl"
+        className="pointer-events-auto flex flex-col justify-center items-center overflow-hidden"
       >
         <div className="flex items-center justify-between w-full">
           {/* Left: Logo */}
@@ -428,26 +430,26 @@ const App = () => {
   );
 
   return (
-    <motion.div 
-      style={{ backgroundColor: bgColor }}
-      className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] relative overflow-hidden transition-colors duration-500"
-    >
-      {/* Premium Background Effects */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sand-light/30 rounded-full blur-[80px] md:blur-[120px] animate-float" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-taupe/20 rounded-full blur-[70px] md:blur-[100px] animate-float" style={{ animationDelay: '-5s' }} />
-      </div>
+    <>
+      <Navbar 
+        onContactClick={() => { setCurrentView('contact'); setActiveNav('contact'); }} 
+        activeNav={activeNav}
+        setActiveNav={setActiveNav}
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+      />
+      <motion.div 
+        style={{ backgroundColor: bgColor }}
+        className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] relative overflow-hidden transition-colors duration-500"
+      >
+        {/* Premium Background Effects */}
+        <div className="fixed inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sand-light/30 rounded-full blur-[80px] md:blur-[120px] animate-float" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-taupe/20 rounded-full blur-[70px] md:blur-[100px] animate-float" style={{ animationDelay: '-5s' }} />
+        </div>
 
-      <div className="relative z-10">
-        <Navbar 
-          onContactClick={() => { setCurrentView('contact'); setActiveNav('contact'); }} 
-          activeNav={activeNav}
-          setActiveNav={setActiveNav}
-          currentView={currentView}
-          setCurrentView={setCurrentView}
-        />
-        
-        <AnimatePresence mode="wait">
+        <div className="relative z-10">
+          <AnimatePresence mode="wait">
           {currentView === 'landing' ? (
             <motion.div
               key="landing"
@@ -1224,6 +1226,7 @@ const App = () => {
         </AnimatePresence>
       </div>
     </motion.div>
+    </>
   );
 };
 
