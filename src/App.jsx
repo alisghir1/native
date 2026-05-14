@@ -340,6 +340,13 @@ const App = () => {
   const [showDef, setShowDef] = useState(false);
   const [currentView, setCurrentView] = useState('landing');
   const [activeNav, setActiveNav] = useState('accueil');
+  const [videoCount, setVideoCount] = useState(5);
+
+  useEffect(() => {
+    const handleCount = (e) => setVideoCount(e.detail);
+    window.addEventListener('videoCountChange', handleCount);
+    return () => window.removeEventListener('videoCountChange', handleCount);
+  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -674,15 +681,7 @@ const App = () => {
                         </div>
                         <div className="flex items-center gap-4 bg-chocolate/5 px-6 py-3 rounded-2xl border border-chocolate/5">
                           <span className="text-3xl md:text-4xl font-bold text-chocolate tabular-nums">
-                            {(() => {
-                              const [count, setCount] = useState(5);
-                              useEffect(() => {
-                                const handleCount = (e) => setCount(e.detail);
-                                window.addEventListener('videoCountChange', handleCount);
-                                return () => window.removeEventListener('videoCountChange', handleCount);
-                              }, []);
-                              return count;
-                            })()}
+                            {videoCount}
                           </span>
                           <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-taupe leading-tight">
                             Vidéos<br />Transcréées
@@ -750,13 +749,6 @@ const App = () => {
 
                       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {(() => {
-                          const [videoCount, setVideoCount] = useState(5);
-                          useEffect(() => {
-                            const handleCount = (e) => setVideoCount(e.detail);
-                            window.addEventListener('videoCountChange', handleCount);
-                            return () => window.removeEventListener('videoCountChange', handleCount);
-                          }, []);
-
                           // Pricing: 85/vid + 95 setup for Scale, 95/vid (all-in) for Blitz
                           const scalePrice = (videoCount * 85) + 95;
                           const blitzPrice = videoCount * 95;
