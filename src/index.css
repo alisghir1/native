@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Jost:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-[#F9F7F2] text-[#291C0E] antialiased selection:bg-[#291C0E] selection:text-[#F9F7F2];
+  font-family: 'Jost', sans-serif;
+  position: relative;
+}
+
+/* Analog Grain Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Refined Glassmorphism */
+.glass-premium {
+  @apply bg-white/40 backdrop-blur-2xl border border-white/50 shadow-[0_8px_32px_0_rgba(41,28,14,0.04)];
+}
+
+.text-gold {
+  background: linear-gradient(135deg, #291C0E 0%, #A78D78 50%, #291C0E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+@layer base {
+  h1, h2, h3 {
+    @apply font-serif font-bold tracking-tight text-[#291C0E];
+  }
+}
+
+section {
+  @apply py-32 md:py-48;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-6 md:px-12;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #F9F7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #291C0E;
+  border-radius: 10px;
+}
+
+/* Background Blobs Animation */
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 50px) scale(1.1); }
+  100% { transform: translate(-20px, 20px) scale(1); }
+}
+
+.animate-float {
+  animation: float 20s infinite alternate ease-in-out;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.group:hover .animate-marquee {
+  animation-play-state: paused;
+}
