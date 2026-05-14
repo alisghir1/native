@@ -412,18 +412,18 @@ const App = () => {
   const bgColor = useTransform(
     targetScrollProgress,
     isMobile 
-      ? [0, 0.02, 0.1, 0.8, 0.88] // Mobile: triggers earlier and ends earlier
-      : [0, 0.05, 0.15, 0.85, 0.95], // Desktop: kept as is
+      ? [0, 0.35, 0.45, 0.85, 0.92] // Adjusted for Showcase inclusion
+      : [0, 0.30, 0.40, 0.85, 0.95], 
     isMobile
-      ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"] // Mobile: darker (#0D0A07)
-      : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"] // Desktop: original chocolate
+      ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"]
+      : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
   );
 
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
     isMobile
-      ? [0.02, 0.1, 0.8, 0.88]
-      : [0.05, 0.15, 0.85, 0.95],
+      ? [0.35, 0.45, 0.85, 0.92]
+      : [0.30, 0.40, 0.85, 0.95],
     [0, 1, 1, 0]
   );
 
@@ -565,8 +565,8 @@ const App = () => {
               </motion.section>
 
               {/* Logo Bar - Scrolling Marquee */}
-              <section className="py-6 md:py-8 border-y border-sand-light/10 bg-white/5 backdrop-blur-sm overflow-hidden">
-                <div className="flex whitespace-nowrap">
+              <section className="py-6 md:py-8 bg-white/5">
+                <div className="flex whitespace-nowrap overflow-hidden">
                   <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale">
                     {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
                       <span key={idx} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
@@ -580,12 +580,7 @@ const App = () => {
                 </div>
               </section>
 
-              <div id="showcase">
-                <Showcase />
-              </div>
-
-              {/* Dark Integrated Block (Workflow + Comparison) */}
-              <div ref={targetRef} className="relative overflow-hidden">
+              <div ref={targetRef} className="relative">
                 {/* Unified Background Gradient with Grain/Dithering Effect */}
                 <motion.div 
                   style={{ opacity: darkBlockOpacity }}
@@ -598,6 +593,10 @@ const App = () => {
                   }}
                   className="absolute inset-0 pointer-events-none mix-blend-overlay" 
                 />
+
+                <div id="showcase">
+                  <Showcase />
+                </div>
 
                 {/* Workflow Section */}
                 <section className="text-cream pt-24 pb-12 md:pt-32 md:pb-16 relative z-10 px-6">
@@ -652,7 +651,7 @@ const App = () => {
                 </section>
 
                 {/* Comparison Section - High Impact */}
-                <section className="pt-12 pb-24 md:pt-16 md:pb-40 px-6 text-cream relative z-10 overflow-hidden">
+                <section className="pt-12 pb-24 md:pt-16 md:pb-40 px-6 text-cream relative z-10 -mt-[1px]">
                   <div className="container relative">
                     {/* Background Accents */}
                     <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[120px] -z-10" />
@@ -1091,7 +1090,7 @@ const App = () => {
               </section>
 
               {/* Footer Section */}
-              <footer className="pt-20 md:pt-32 pb-12 text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
+              <footer className="bg-chocolate pt-20 md:pt-32 pb-12 text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
                 <div className="container relative z-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-24">
                     {/* Brand Column */}

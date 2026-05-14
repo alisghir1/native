@@ -40,7 +40,7 @@ const Showcase = () => {
   const isShrunk = !isHovered;
 
   return (
-    <section className="py-20 md:py-32 overflow-hidden px-6">
+    <section className="py-20 md:py-32 px-6">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
           
