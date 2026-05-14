@@ -64,12 +64,14 @@ const Showcase = () => {
                     exit={{ opacity: 0, scale: 1.1 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     loop
+                    muted
                     playsInline
+                    preload="auto"
                     className="w-full h-full object-cover"
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
                   >
-                    <source src={selectedLang.video} type="video/mp4" />
+                    <source src={`${selectedLang.video}#t=0.001`} type="video/mp4" />
                   </motion.video>
                 </AnimatePresence>
 
