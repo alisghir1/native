@@ -30,6 +30,7 @@ const Showcase = () => {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
+        videoRef.current.muted = false; // Restore sound
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
@@ -64,7 +65,6 @@ const Showcase = () => {
                     exit={{ opacity: 0, scale: 1.1 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
                     loop
-                    muted
                     playsInline
                     preload="auto"
                     className="w-full h-full object-cover"

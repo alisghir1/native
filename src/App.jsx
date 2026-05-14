@@ -270,8 +270,12 @@ const PhoneMockup = ({ videoUrl, langList, initialLang }) => {
   const togglePlay = (e) => {
     if (e.target.closest('.lang-selector')) return;
     if (videoRef.current) {
-      if (isPlaying) videoRef.current.pause();
-      else videoRef.current.play();
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.muted = false; // Ensure unmuted when playing
+        videoRef.current.play();
+      }
       setIsPlaying(!isPlaying);
     }
   };
@@ -296,7 +300,6 @@ const PhoneMockup = ({ videoUrl, langList, initialLang }) => {
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             loop
-            muted
             playsInline
             preload="auto"
             className="w-full h-full object-cover"
