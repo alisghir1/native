@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
-import WorldMap from './components/WorldMap.jsx';
 
 const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -625,9 +624,9 @@ const App = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative w-full"
+                      className="relative aspect-[4/5] md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50"
                     >
-                      <WorldMap />
+                      <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-80" alt="Studio Virae" />
                     </motion.div>
                   </div>
                 </div>
@@ -642,30 +641,32 @@ const App = () => {
                   </FadeInView>
                 </div>
                 
-                <div className="relative flex w-full overflow-hidden group">
-                  <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <PhoneMockup 
-                        key={i}
-                        langList={[
-                          { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                          { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                          { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                        ]}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0" aria-hidden="true">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <PhoneMockup 
-                        key={`dup-${i}`}
-                        langList={[
-                          { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                          { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                          { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                        ]}
-                      />
-                    ))}
+                <div className="container mx-auto px-4 md:px-12">
+                  <div className="relative flex w-full overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+                    <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <PhoneMockup 
+                          key={i}
+                          langList={[
+                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                          ]}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0" aria-hidden="true">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <PhoneMockup 
+                          key={`dup-${i}`}
+                          langList={[
+                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                          ]}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </section>
