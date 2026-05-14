@@ -412,7 +412,7 @@ const App = () => {
   const bgColor = useTransform(
     targetScrollProgress,
     isMobile 
-      ? [0, 0.35, 0.45, 0.85, 0.92] // Adjusted for Showcase inclusion
+      ? [0, 0.15, 0.25, 0.85, 0.92] // Advanced for iPhone/Mobile
       : [0, 0.30, 0.40, 0.85, 0.95], 
     isMobile
       ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"]
@@ -422,7 +422,7 @@ const App = () => {
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
     isMobile
-      ? [0.35, 0.45, 0.85, 0.92]
+      ? [0.15, 0.25, 0.85, 0.92] // Advanced for iPhone/Mobile
       : [0.30, 0.40, 0.85, 0.95],
     [0, 1, 1, 0]
   );
