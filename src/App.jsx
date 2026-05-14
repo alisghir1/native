@@ -393,6 +393,15 @@ const App = () => {
   const heroOpacity = useScrollYTransform([0, 0.3], [1, 0]);
   const heroScale = useScrollYTransform([0, 0.3], [1, 0.95]);
 
+  // Screen size detection for specific mobile adjustments
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Precise scroll-linked background color transition using a target ref
   const targetRef = useRef(null);
   const { scrollYProgress: targetScrollProgress } = useScroll({
@@ -402,13 +411,19 @@ const App = () => {
 
   const bgColor = useTransform(
     targetScrollProgress,
-    [0, 0.05, 0.15, 0.85, 0.95],
-    ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
+    isMobile 
+      ? [0, 0.02, 0.1, 0.9, 0.98] // Mobile: triggers earlier
+      : [0, 0.05, 0.15, 0.85, 0.95], // Desktop: kept as is
+    isMobile
+      ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"] // Mobile: darker (#0D0A07)
+      : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"] // Desktop: original chocolate
   );
 
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
-    [0.05, 0.15, 0.85, 0.95],
+    isMobile
+      ? [0.02, 0.1, 0.9, 0.98]
+      : [0.05, 0.15, 0.85, 0.95],
     [0, 1, 1, 0]
   );
 
