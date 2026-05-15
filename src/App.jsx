@@ -16,7 +16,7 @@ import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
 import QualityControl from './components/QualityControl.jsx';
 
-const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView }) => {
+const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView, lenis }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lang, setLang] = useState('FR');
@@ -42,19 +42,27 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
         // Petit délai pour laisser le temps au DOM de se charger avant le scroll
         setTimeout(() => {
           if (item === 'Accueil') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (lenis) lenis.scrollTo(0);
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
             const el = document.getElementById(item.toLowerCase());
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
+            if (el) {
+              if (lenis) lenis.scrollTo(el);
+              else el.scrollIntoView({ behavior: 'smooth' });
+            }
           }
         }, 100);
       } else {
         setActiveNav(item.toLowerCase());
         if (item === 'Accueil') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (lenis) lenis.scrollTo(0);
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           const el = document.getElementById(item.toLowerCase());
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          if (el) {
+            if (lenis) lenis.scrollTo(el);
+            else el.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
     }
@@ -99,7 +107,8 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
                 e.preventDefault();
                 setCurrentView('landing');
                 setActiveNav('accueil'); 
-                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+                if (lenis) lenis.scrollTo(0);
+                else window.scrollTo({ top: 0, behavior: 'smooth' }); 
               }}
             >
               VIRAE<span className="text-taupe transition-colors duration-500">.</span>
@@ -421,66 +430,86 @@ const App = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Precise scroll-linked background color transition using a target ref
-  const targetRef = useRef(null);
-  const { scrollYProgress: targetScrollProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"]
-  });
+  // Precise scroll-linked background color transition using absolute pixels
+  const { scrollY } = useScroll();
 
   const bgColor = useTransform(
-    targetScrollProgress,
+    scrollY,
     isMobile 
-      ? [0, 0.25, 0.35, 0.85, 0.92] // Middle ground for iPhone/Mobile
-      : [0, 0.30, 0.40, 0.85, 0.95], 
+      ? [0, 600, 1000, 3200, 3800] 
+      : [0, 800, 1400, 3500, 4200], 
     isMobile
       ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"]
       : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
   );
 
   const workflowTextColor = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
     ["#291C0E", "#291C0E", "#F9F7F2", "#F9F7F2", "#291C0E"]
   );
 
   const workflowSubTextColor = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
-    ["rgba(41, 28, 14, 0.5)", "rgba(41, 28, 14, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(41, 28, 14, 0.5)"]
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    ["rgba(41, 28, 14, 0.5)", "rgba(41, 28, 14, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(41, 28, 14, 0.5)"]  
   );
 
   const workflowBorderColor = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
-    ["rgba(41, 28, 14, 0.1)", "rgba(41, 28, 14, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(41, 28, 14, 0.1)"]
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    ["rgba(41, 28, 14, 0.1)", "rgba(41, 28, 14, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(41, 28, 14, 0.1)"]  
   );
 
   const qcCardBg = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
     ["rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.4)"]
   );
 
   const workflowIconBg = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
     ["#FFFFFF", "#FFFFFF", "rgba(212, 175, 55, 0.1)", "rgba(212, 175, 55, 0.1)", "#FFFFFF"]
   );
 
   const workflowIconColor = useTransform(
-    targetScrollProgress,
-    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    scrollY,
+    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
     ["#291C0E", "#291C0E", "#D4AF37", "#D4AF37", "#291C0E"]
   );
 
   const darkBlockOpacity = useTransform(
-    targetScrollProgress,
+    scrollY,
     isMobile
-      ? [0.25, 0.35, 0.85, 0.92] // Middle ground for iPhone/Mobile
-      : [0.30, 0.40, 0.85, 0.95],
+      ? [600, 1000, 3200, 3800] 
+      : [800, 1400, 3500, 4200],
     [0, 1, 1, 0]
   );
+
+  const lenisRef = useRef(null);
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    lenisRef.current = lenis;
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
+  // Fix: Force background color reset and scroll to top on navigation
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [currentView]);
 
   return (
     <>
@@ -492,7 +521,7 @@ const App = () => {
         setCurrentView={setCurrentView}
       />
       <motion.div 
-        style={{ backgroundColor: bgColor }}
+        style={{ backgroundColor: currentView === 'landing' ? bgColor : "#F9F7F2" }}
         className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] relative overflow-hidden transition-colors duration-500"
       >
         {/* Premium Background Effects */}
@@ -619,7 +648,7 @@ const App = () => {
                 </div>
               </motion.section>
 
-              <div ref={targetRef} className="relative">
+              <div className="relative">
                 {/* Logo Bar - Scrolling Marquee */}
                 <section className="py-6 md:py-8">
                   <div className="flex whitespace-nowrap overflow-hidden">
@@ -873,30 +902,30 @@ const App = () => {
 
                         <div className="w-full max-w-[1600px] mx-auto px-4">
                           <div className="relative flex w-full group">
-                            <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0">
-                              {[1, 2, 3, 4, 5, 6].map((i) => (
-                                <PhoneMockup 
-                                  key={i}
-                                  langList={[
-                                    { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                                    { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                                    { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                                  ]}
-                                />
-                              ))}
-                            </div>
-                            <div className="flex gap-4 md:gap-6 animate-marquee py-12 md:py-20 pr-4 md:pr-6 shrink-0" aria-hidden="true">
-                              {[1, 2, 3, 4, 5, 6].map((i) => (
-                                <PhoneMockup 
-                                  key={`dup-${i}`}
-                                  langList={[
-                                    { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                                    { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                                    { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                                  ]}
-                                />
-                              ))}
-                            </div>
+                    <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <PhoneMockup 
+                          key={i}
+                          langList={[
+                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                          ]}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0" aria-hidden="true">
+                      {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <PhoneMockup 
+                          key={`dup-${i}`}
+                          langList={[
+                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                          ]}
+                        />
+                      ))}
+                    </div>
                           </div>
                         </div>
                       </section>

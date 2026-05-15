@@ -35,7 +35,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-taupe mb-1">Email</p>
-                  <a href="mailto:hello@virae.ai" className="text-lg md:text-xl font-serif italic hover:text-gold transition-colors text-chocolate">hello@virae.ai</a>
+                  <a href="mailto:contact@virae.com" className="text-lg md:text-xl font-serif italic hover:text-gold transition-colors text-chocolate">contact@virae.com</a>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@ const Contact = () => {
                     <img src="https://i.pravatar.cc/100?img=68" alt="Founder" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-chocolate">Marc-Antoine D.</p>
+                    <p className="text-xs font-bold text-chocolate">Ali S.</p>
                     <p className="text-[9px] md:text-[10px] font-medium text-taupe tracking-wider uppercase">Fondateur & Directeur Créatif</p>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Right Column: Booking & Form */}
+          {/* Right Column: Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -71,28 +71,11 @@ const Contact = () => {
             className="bg-white/40 backdrop-blur-xl border border-white p-6 md:p-12 rounded-[2.5rem] md:rounded-[3rem] shadow-2xl"
           >
             <div className="mb-8 md:mb-12">
-              <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Réserver une consultation</h3>
-              <p className="text-xs md:text-sm text-chocolate/50 font-medium">Session stratégique offerte de 30 minutes.</p>
+              <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Envoyez-nous un message</h3>
+              <p className="text-xs md:text-sm text-chocolate/50 font-medium">Nous revenons vers vous avec une proposition stratégique sous 24h.</p>
             </div>
 
             <div className="space-y-6 md:space-y-8">
-              {/* Fake Booking Widget / Integrated Look */}
-              <div className="grid grid-cols-7 gap-1 md:gap-2 mb-6 md:mb-8">
-                {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day) => (
-                  <div key={day} className="text-center text-[9px] md:text-[10px] font-black text-taupe py-2">{day}</div>
-                ))}
-                {[...Array(31)].map((_, i) => (
-                  <button 
-                    key={i} 
-                    className={`aspect-square rounded-lg md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold transition-all ${
-                      i === 14 ? 'bg-chocolate text-white shadow-lg' : 'hover:bg-chocolate/5 text-chocolate/60'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-              </div>
-
               <div className="space-y-3 md:space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                   <input type="text" placeholder="Prénom" className="w-full bg-white/50 border border-chocolate/5 px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-sm focus:outline-none focus:border-gold transition-colors" />
@@ -105,12 +88,12 @@ const Contact = () => {
                   <option>Partenariat Agence</option>
                   <option>Autre</option>
                 </select>
-                <textarea rows="3" placeholder="Votre message..." className="w-full bg-white/50 border border-chocolate/5 px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-sm focus:outline-none focus:border-gold transition-colors resize-none"></textarea>
+                <textarea rows="4" placeholder="Votre message..." className="w-full bg-white/50 border border-chocolate/5 px-5 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl text-sm focus:outline-none focus:border-gold transition-colors resize-none"></textarea>
               </div>
 
               <button className="w-full group relative bg-chocolate text-cream py-4 md:py-5 rounded-full text-[11px] md:text-[12px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-500 shadow-xl">
                 <span className="relative z-10 flex items-center justify-center gap-3">
-                  Confirmer le rendez-vous <ArrowRight size={18} />
+                  Envoyer ma demande <ArrowRight size={18} />
                 </span>
                 <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </button>
