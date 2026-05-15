@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
+import QualityControl from './components/QualityControl.jsx';
 
 const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,17 +69,17 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           opacity: 1,
           width: '100%',
           maxWidth: isScrolled ? '1200px' : '1400px',
-          borderRadius: isScrolled ? (isMenuOpen ? 32 : 80) : 0,
-          paddingLeft: isScrolled ? (isMenuOpen ? 24 : 40) : 48,
-          paddingRight: isScrolled ? (isMenuOpen ? 24 : 40) : 48,
-          paddingTop: isScrolled ? 14 : 20,
-          paddingBottom: isScrolled ? 14 : 20,
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0)',
-          backdropFilter: isScrolled ? 'blur(40px) saturate(200%)' : 'blur(0px)',
-          WebkitBackdropFilter: isScrolled ? 'blur(40px) saturate(200%)' : 'blur(0px)',
-          boxShadow: isScrolled ? '0 20px 50px -15px rgba(0,0,0,0.1)' : 'none',
+          borderRadius: (isScrolled || isMenuOpen) ? (isMenuOpen ? 32 : 80) : 0,
+          paddingLeft: (isScrolled || isMenuOpen) ? (isMenuOpen ? 24 : 40) : 48,
+          paddingRight: (isScrolled || isMenuOpen) ? (isMenuOpen ? 24 : 40) : 48,
+          paddingTop: (isScrolled || isMenuOpen) ? 14 : 20,
+          paddingBottom: (isScrolled || isMenuOpen) ? 14 : 20,
+          backgroundColor: (isScrolled || isMenuOpen) ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0)',
+          backdropFilter: (isScrolled || isMenuOpen) ? 'blur(40px) saturate(200%)' : 'blur(0px)',
+          WebkitBackdropFilter: (isScrolled || isMenuOpen) ? 'blur(40px) saturate(200%)' : 'blur(0px)',
+          boxShadow: (isScrolled || isMenuOpen) ? '0 20px 50px -15px rgba(0,0,0,0.1)' : 'none',
           borderWidth: 1,
-          borderColor: isScrolled ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0)'
+          borderColor: (isScrolled || isMenuOpen) ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 255, 255, 0)'
         }}
         transition={{ 
           type: 'spring',
@@ -228,15 +229,31 @@ const useScrollYTransform = (range, output) => {
   return useTransform(scrollYProgress, range, output);
 };
 
-const ProcessStep = ({ number, title, desc, delay }) => (
+const ProcessStep = ({ number, title, desc, delay, textColor, subTextColor, borderColor }) => (
   <FadeInView delay={delay}>
-    <div className="relative pl-12 md:pl-16 pb-12 md:pb-16 border-l border-white/10 last:pb-0">
-      <div className="absolute left-[-20px] top-0 w-10 h-10 flex items-center justify-center text-sm md:text-base font-bold z-20 text-white">
+    <motion.div 
+      style={{ borderColor }}
+      className="relative pl-12 md:pl-16 pb-12 md:pb-16 border-l last:pb-0"
+    >
+      <motion.div 
+        style={{ color: textColor }}
+        className="absolute left-[-20px] top-0 w-10 h-10 flex items-center justify-center text-sm md:text-base font-bold z-20"
+      >
         {number}
-      </div>
-      <h4 className="text-lg md:text-xl font-serif mb-3 md:mb-4 italic text-cream">{title}</h4>
-      <p className="text-sm md:text-base text-cream/60 leading-relaxed max-w-sm font-medium">{desc}</p>
-    </div>
+      </motion.div>
+      <motion.h4 
+        style={{ color: textColor }}
+        className="text-lg md:text-xl font-serif mb-3 md:mb-4 italic"
+      >
+        {title}
+      </motion.h4>
+      <motion.p 
+        style={{ color: subTextColor }}
+        className="text-sm md:text-base leading-relaxed max-w-sm font-medium"
+      >
+        {desc}
+      </motion.p>
+    </motion.div>
   </FadeInView>
 );
 
@@ -421,6 +438,42 @@ const App = () => {
       : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
   );
 
+  const workflowTextColor = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["#291C0E", "#291C0E", "#F9F7F2", "#F9F7F2", "#291C0E"]
+  );
+
+  const workflowSubTextColor = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["rgba(41, 28, 14, 0.5)", "rgba(41, 28, 14, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(41, 28, 14, 0.5)"]
+  );
+
+  const workflowBorderColor = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["rgba(41, 28, 14, 0.1)", "rgba(41, 28, 14, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(41, 28, 14, 0.1)"]
+  );
+
+  const qcCardBg = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.4)"]
+  );
+
+  const workflowIconBg = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["#FFFFFF", "#FFFFFF", "rgba(212, 175, 55, 0.1)", "rgba(212, 175, 55, 0.1)", "#FFFFFF"]
+  );
+
+  const workflowIconColor = useTransform(
+    targetScrollProgress,
+    isMobile ? [0, 0.25, 0.35, 0.85, 0.92] : [0, 0.30, 0.40, 0.85, 0.95],
+    ["#291C0E", "#291C0E", "#D4AF37", "#D4AF37", "#291C0E"]
+  );
+
   const darkBlockOpacity = useTransform(
     targetScrollProgress,
     isMobile
@@ -566,23 +619,23 @@ const App = () => {
                 </div>
               </motion.section>
 
-              {/* Logo Bar - Scrolling Marquee */}
-              <section className="py-6 md:py-8 bg-white/5">
-                <div className="flex whitespace-nowrap overflow-hidden">
-                  <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale">
-                    {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
-                      <span key={idx} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
-                    ))}
-                  </div>
-                  <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale" aria-hidden="true">
-                    {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
-                      <span key={`dup-${idx}`} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
-                    ))}
-                  </div>
-                </div>
-              </section>
-
               <div ref={targetRef} className="relative">
+                {/* Logo Bar - Scrolling Marquee */}
+                <section className="py-6 md:py-8">
+                  <div className="flex whitespace-nowrap overflow-hidden">
+                    <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale">
+                      {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
+                        <span key={idx} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
+                      ))}
+                    </div>
+                    <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale" aria-hidden="true">
+                      {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
+                        <span key={`dup-${idx}`} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
+                      ))}
+                    </div>
+                  </div>
+                </section>
+
                 {/* Unified Background Gradient with Grain/Dithering Effect */}
                 <motion.div 
                   style={{ opacity: darkBlockOpacity }}
@@ -601,18 +654,29 @@ const App = () => {
                 </div>
 
                 {/* Workflow Section */}
-                <section className="text-cream pt-24 pb-12 md:pt-32 md:pb-16 relative z-10 px-6">
+                <section className="pt-24 pb-12 md:pt-32 md:pb-16 relative z-10 px-6">
                   <div className="container relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
                       <div className="lg:col-span-1">
                         <FadeInView>
                           <span className="text-taupe uppercase tracking-[0.4em] md:tracking-[0.6em] text-xs md:text-sm font-bold mb-6 block">The Methodology</span>
-                          <h2 className="text-3xl md:text-6xl text-cream mb-8 md:mb-10 leading-[1.1] italic">Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span></h2>
-                          <p className="text-cream/50 text-base md:text-lg mb-10 md:mb-12 leading-relaxed">
+                          <motion.h2 
+                            style={{ color: workflowTextColor }}
+                            className="text-3xl md:text-6xl mb-8 md:mb-10 leading-[1.1] italic"
+                          >
+                            Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span>
+                          </motion.h2>
+                          <motion.p 
+                            style={{ color: workflowSubTextColor }}
+                            className="text-base md:text-lg mb-10 md:mb-12 leading-relaxed"
+                          >
                             Une technologie de pointe supervisée par l'œil humain. Pour un résultat indétectable, en un temps record.
-                          </p>
+                          </motion.p>
                           
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t border-white/10">
+                          <motion.div 
+                            style={{ borderColor: workflowBorderColor }}
+                            className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t"
+                          >
                             {[
                               { label: "Délai moyen", value: "24h" },
                               { label: "Précision Lip-Sync", value: "99.9%" },
@@ -620,10 +684,15 @@ const App = () => {
                             ].map((stat, i) => (
                               <div key={i} className="flex flex-col">
                                 <span className="text-2xl md:text-3xl font-serif italic text-gold mb-1">{stat.value}</span>
-                                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-cream/40">{stat.label}</span>
+                                <motion.span 
+                                  style={{ color: workflowSubTextColor }}
+                                  className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]"
+                                >
+                                  {stat.label}
+                                </motion.span>
                               </div>
                             ))}
-                          </div>
+                          </motion.div>
                         </FadeInView>
                       </div>
                       <div className="lg:col-span-1 mt-10 lg:mt-0">
@@ -633,18 +702,27 @@ const App = () => {
                             title="Adaptation Culturelle" 
                             desc="On ne traduit pas, on adapte. Nous réécrivons votre script avec les expressions locales pour que votre message sonne vrai." 
                             delay={0.2} 
+                            textColor={workflowTextColor}
+                            subTextColor={workflowSubTextColor}
+                            borderColor={workflowBorderColor}
                           />
                           <ProcessStep 
                             number="02" 
                             title="Clonage Vocal" 
                             desc="Nous capturons l'essence de votre voix. Le résultat : Vous parlez une nouvelle langue en gardant votre propre timbre." 
                             delay={0.4} 
+                            textColor={workflowTextColor}
+                            subTextColor={workflowSubTextColor}
+                            borderColor={workflowBorderColor}
                           />
                           <ProcessStep 
                             number="03" 
                             title="Synchro Labiale" 
                             desc="Nous réalignons le mouvement de vos lèvres. Pour que la vidéo paraisse 100% organique, jamais artificielle." 
                             delay={0.6} 
+                            textColor={workflowTextColor}
+                            subTextColor={workflowSubTextColor}
+                            borderColor={workflowBorderColor}
                           />
                         </div>
                       </div>
@@ -740,8 +818,19 @@ const App = () => {
                 </section>
               </div>
 
+              <div className="-mt-[1px]">
+                <QualityControl 
+                  textColor={workflowTextColor}
+                  subTextColor={workflowSubTextColor}
+                  borderColor={workflowBorderColor}
+                  cardBg={qcCardBg}
+                  iconBg={workflowIconBg}
+                  iconColor={workflowIconColor}
+                />
+              </div>
+
               {/* Expertise Section */}
-              <section id="expertise" className="py-20 md:pt-28 md:pb-10 relative overflow-hidden px-6">
+              <section id="expertise" className="py-20 md:pt-16 md:pb-10 relative px-6">
                 <div className="container">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
                     <motion.div
@@ -773,47 +862,47 @@ const App = () => {
                 </div>
               </section>
 
-              {/* Creations Marquee Section */}
-              <section className="py-20 md:pt-10 md:pb-28 overflow-hidden w-full">
-                <div className="w-full mb-8 md:mb-12 text-center px-6">
-                  <FadeInView>
-                    <h2 className="text-3xl md:text-5xl font-serif italic mb-4 md:mb-6 text-chocolate">Quelques unes de nos créations.</h2>
-                    <p className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-bold text-taupe opacity-60">Virae Selection</p>
-                  </FadeInView>
-                </div>
-                
-                <div className="w-full max-w-[1600px] mx-auto px-4">
-                  <div className="relative flex w-full overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-                    <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <PhoneMockup 
-                          key={i}
-                          langList={[
-                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                          ]}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex gap-4 md:gap-6 animate-marquee py-6 md:py-10 pr-4 md:pr-6 shrink-0" aria-hidden="true">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <PhoneMockup 
-                          key={`dup-${i}`}
-                          langList={[
-                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                          ]}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </section>
+                      {/* Creations Marquee Section */}
+                      <section className="py-16 md:py-24 w-full">
+                        <div className="w-full mb-2 md:mb-4 text-center px-6">
+                          <FadeInView>
+                            <h2 className="text-3xl md:text-5xl font-serif italic mb-4 text-chocolate">Quelques unes de nos créations.</h2>
+                            <p className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-bold text-taupe opacity-60">Virae Selection</p>
+                          </FadeInView>
+                        </div>
 
-              {/* Pricing Section */}
-              <section id="tarifs" className="pt-20 md:pt-32 pb-10 md:pb-16 px-2 md:px-6">
+                        <div className="w-full max-w-[1600px] mx-auto px-4">
+                          <div className="relative flex w-full group">
+                            <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0">
+                              {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <PhoneMockup 
+                                  key={i}
+                                  langList={[
+                                    { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                                    { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                                    { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                                  ]}
+                                />
+                              ))}
+                            </div>
+                            <div className="flex gap-4 md:gap-6 animate-marquee py-12 md:py-20 pr-4 md:pr-6 shrink-0" aria-hidden="true">
+                              {[1, 2, 3, 4, 5, 6].map((i) => (
+                                <PhoneMockup 
+                                  key={`dup-${i}`}
+                                  langList={[
+                                    { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                                    { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                                    { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                                  ]}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
+                      {/* Pricing Section */}
+                      <section id="tarifs" className="pt-8 md:pt-12 pb-10 md:pb-16 px-2 md:px-6">
                 <div className="container mx-auto">
                   <div className="text-center mb-16 md:mb-20">
                     <FadeInView>
