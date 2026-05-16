@@ -18,6 +18,18 @@ import QualityControl from './components/QualityControl.jsx';
 import FAQ from './components/FAQ.jsx';
 import { MentionsLegales, Confidentialite, Cookies, CGV } from './components/Legal.jsx';
 
+const InstagramIcon = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+);
+
+const LinkedinIcon = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+);
+
+const XIcon = ({ size = 24 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16H20L8.267 4z"/><path d="M4 20l6.768-6.768m2.464-2.464L20 4"/></svg>
+);
+
 const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView, lenis }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1003,8 +1015,23 @@ const App = () => {
                   <div className="flex flex-col gap-6 md:gap-8">
                     <a href="#" className="font-serif text-[24px] md:text-[28px] font-black tracking-tighter text-cream group relative w-fit">VIRAE<span className="text-gold">.</span></a>
                     <p className="text-cream/50 text-sm leading-relaxed max-w-[240px] font-medium">L'intelligence artificielle au service de l'émotion humaine. Exportez votre vision sans limites.</p>
-                    <div className="flex gap-4">{['Instagram', 'LinkedIn', 'X'].map((social) => (<a key={social} href={`https://${social.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500">{social[0]}</a>))}</div>
-                  </div>
+                    <div className="flex gap-4">
+                      {[
+                        { name: 'Instagram', icon: InstagramIcon },
+                        { name: 'LinkedIn', icon: LinkedinIcon },
+                        { name: 'X', icon: XIcon }
+                      ].map((social) => (
+                        <a 
+                          key={social.name} 
+                          href={`https://${social.name.toLowerCase()}.com`} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500"
+                        >
+                          <social.icon size={18} />
+                        </a>
+                      ))}
+                    </div>                  </div>
                   <div className="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-0 lg:col-span-2 lg:grid-cols-2">
                     <div>
                       <h4 className="text-gold uppercase tracking-[0.2em] text-[10px] font-black mb-6">Navigation</h4>
