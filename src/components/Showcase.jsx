@@ -40,7 +40,7 @@ const Showcase = () => {
   const isShrunk = !isHovered;
 
   return (
-    <section className="py-20 md:py-32 px-6">
+    <section className="py-24 md:py-40 px-6">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
           
@@ -192,7 +192,7 @@ const Showcase = () => {
                 className="w-full md:w-auto group relative bg-studio-brown text-white px-10 py-4 md:py-5 rounded-full text-[13px] md:text-[14px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-500 shadow-2xl hover:shadow-studio-brown/20 hover:-translate-y-1"
               >
                 <span className="relative z-10 flex items-center justify-center gap-3">
-                  Déployer votre Vision <ArrowRight size={20} />
+                  Essai Gratuit <ArrowRight size={20} />
                 </span>
                 <div className="absolute inset-0 bg-taupe translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </button>

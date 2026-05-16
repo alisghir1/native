@@ -15,6 +15,8 @@ import {
 import Showcase from './components/Showcase.jsx';
 import Contact from './components/Contact.jsx';
 import QualityControl from './components/QualityControl.jsx';
+import FAQ from './components/FAQ.jsx';
+import { MentionsLegales, Confidentialite, Cookies, CGV } from './components/Legal.jsx';
 
 const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurrentView, lenis }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,7 +29,7 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['Accueil', 'Expertise', 'Tarifs', 'Contact'];
+  const navItems = ['Accueil', 'Expertise', 'Tarifs', 'FAQ', 'Contact'];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -36,10 +38,9 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
     if (item === 'Contact') {
       onContactClick();
     } else {
-      if (currentView === 'contact') {
+      if (currentView !== 'landing') {
         setCurrentView('landing');
         setActiveNav(item.toLowerCase());
-        // Petit délai pour laisser le temps au DOM de se charger avant le scroll
         setTimeout(() => {
           if (item === 'Accueil') {
             if (lenis) lenis.scrollTo(0);
@@ -98,7 +99,6 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
         className="pointer-events-auto flex flex-col justify-center items-center overflow-hidden"
       >
         <div className="flex items-center justify-between w-full">
-          {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
             <motion.a 
               href="#" 
@@ -116,7 +116,6 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
             </motion.a>
           </div>
           
-          {/* Center: Navigation (Desktop) */}
           <div className="hidden md:flex items-center justify-center gap-10 flex-[2]">
             <div className="flex items-center gap-8">
               {navItems.map((item) => {
@@ -143,7 +142,6 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
             </div>
           </div>
 
-          {/* Right: Actions (Desktop) */}
           <div className="flex-1 hidden md:flex justify-end">
             <div className="flex items-center gap-6">
               <button 
@@ -156,13 +154,12 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
                 onClick={onContactClick}
                 className="relative group overflow-hidden bg-chocolate text-cream px-6 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-widest transition-all duration-500 shadow-lg hover:shadow-chocolate/20 hover:-translate-y-0.5 active:scale-95"
               >
-                <span className="relative z-10">Démarrer</span>
+                <span className="relative z-10">Essai Gratuit</span>
                 <div className="absolute inset-0 bg-taupe translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </button>
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-4">
              <button 
                 onClick={() => setLang(lang === 'FR' ? 'EN' : 'FR')}
@@ -179,7 +176,6 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
@@ -211,7 +207,7 @@ const Navbar = ({ onContactClick, activeNav, setActiveNav, currentView, setCurre
                   onClick={onContactClick}
                   className="mt-4 bg-chocolate text-cream px-10 py-4 rounded-full text-[12px] font-bold uppercase tracking-widest shadow-xl"
                 >
-                  Démarrer
+                  Essai Gratuit
                 </motion.button>
               </div>
             </motion.div>
@@ -266,23 +262,6 @@ const ProcessStep = ({ number, title, desc, delay, textColor, subTextColor, bord
   </FadeInView>
 );
 
-const LuxuryCard = ({ icon: Icon, title, desc, delay }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-30px" }}
-    transition={{ duration: 0.8, delay, ease: [0.21, 1, 0.36, 1] }}
-  >
-    <div className="group relative p-8 md:p-10 rounded-[2rem] bg-white/30 border border-white/50 hover:bg-white/50 transition-all duration-700">
-      <div className="w-12 h-12 rounded-full bg-cream flex items-center justify-center mb-6 border border-sand-light">
-        <Icon size={20} className="text-chocolate" />
-      </div>
-      <h3 className="text-xl font-serif mb-4 italic">{title}</h3>
-      <p className="text-sm text-chocolate/50 leading-relaxed font-medium">{desc}</p>
-    </div>
-  </motion.div>
-);
-
 const PhoneMockup = ({ videoUrl, langList, initialLang }) => {
   const [selectedLang, setSelectedLang] = useState(initialLang || langList[0]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -317,7 +296,7 @@ const PhoneMockup = ({ videoUrl, langList, initialLang }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="absolute inset-0 rounded-[3rem] border-[8px] border-white/20 shadow-2xl z-30 pointer-events-none bg-white/5" />
+      <div className="absolute inset-0 rounded-[3rem] border-[8px] border-white/20 shadow-2xl z-30 pointer-events-none bg-white/5" />    
       <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden bg-black z-10">
         <AnimatePresence mode="wait">
           <motion.video
@@ -351,7 +330,7 @@ const PhoneMockup = ({ videoUrl, langList, initialLang }) => {
         className="absolute left-4 right-4 z-40 lang-selector"
         animate={{ top: isShrunk ? "1.5rem" : "2.5rem", scale: isShrunk ? 0.8 : 0.95 }}
       >
-        <div className="flex justify-center gap-1 p-1 bg-black/40 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-2xl">
+        <div className="flex justify-center gap-1 p-1 bg-black/40 backdrop-blur-2xl rounded-2xl border border-white/20 shadow-2xl">      
           {langList.map((lang) => (
             <button
               key={lang.code}
@@ -375,6 +354,22 @@ const App = () => {
   const [activeNav, setActiveNav] = useState('accueil');
   const [videoCount, setVideoCount] = useState(5);
 
+  const lenisRef = useRef(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    lenisRef.current = lenis;
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
   useEffect(() => {
     const handleNavigation = (e) => {
       if (e.detail === 'contact') {
@@ -393,35 +388,9 @@ const App = () => {
     return () => window.removeEventListener('videoCountChange', handleCount);
   }, []);
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
-
   const heroOpacity = useScrollYTransform([0, 0.3], [1, 0]);
   const heroScale = useScrollYTransform([0, 0.3], [1, 0.95]);
 
-  // Screen size detection for specific mobile adjustments
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -430,14 +399,13 @@ const App = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Precise scroll-linked background color transition using absolute pixels
   const { scrollY } = useScroll();
 
   const bgColor = useTransform(
     scrollY,
     isMobile 
-      ? [0, 600, 1000, 3200, 3800] 
-      : [0, 800, 1400, 3500, 4200], 
+      ? [0, 1700, 2200, 4500, 5100] 
+      : [0, 1050, 1650, 3200, 3800], 
     isMobile
       ? ["#F9F7F2", "#F9F7F2", "#0D0A07", "#0D0A07", "#F9F7F2"]
       : ["#F9F7F2", "#F9F7F2", "#291C0E", "#291C0E", "#F9F7F2"]
@@ -445,71 +413,628 @@ const App = () => {
 
   const workflowTextColor = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["#291C0E", "#291C0E", "#F9F7F2", "#F9F7F2", "#291C0E"]
   );
 
   const workflowSubTextColor = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["rgba(41, 28, 14, 0.5)", "rgba(41, 28, 14, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(249, 247, 242, 0.5)", "rgba(41, 28, 14, 0.5)"]  
   );
 
   const workflowBorderColor = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["rgba(41, 28, 14, 0.1)", "rgba(41, 28, 14, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.1)", "rgba(41, 28, 14, 0.1)"]  
   );
 
   const qcCardBg = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.05)", "rgba(255, 255, 255, 0.4)"]
   );
 
   const workflowIconBg = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["#FFFFFF", "#FFFFFF", "rgba(212, 175, 55, 0.1)", "rgba(212, 175, 55, 0.1)", "#FFFFFF"]
   );
 
   const workflowIconColor = useTransform(
     scrollY,
-    isMobile ? [0, 600, 1000, 3200, 3800] : [0, 800, 1400, 3500, 4200],
+    isMobile ? [0, 1700, 2200, 4500, 5100] : [0, 1050, 1650, 3200, 3800],
     ["#291C0E", "#291C0E", "#D4AF37", "#D4AF37", "#291C0E"]
   );
 
   const darkBlockOpacity = useTransform(
     scrollY,
     isMobile
-      ? [600, 1000, 3200, 3800] 
-      : [800, 1400, 3500, 4200],
+      ? [1700, 2200, 4500, 5100] 
+      : [1050, 1650, 3200, 3800],
     [0, 1, 1, 0]
   );
 
-  const lenisRef = useRef(null);
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    lenisRef.current = lenis;
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
-
-  // Fix: Force background color reset and scroll to top on navigation
-  useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, [currentView]);
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'contact':
+        return (
+          <motion.div key="contact" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+            <Contact />
+          </motion.div>
+        );
+      case 'mentions':
+        return <MentionsLegales onBack={() => setCurrentView('landing')} setView={setCurrentView} />;
+      case 'confidentialite':
+        return <Confidentialite onBack={() => setCurrentView('landing')} setView={setCurrentView} />;
+      case 'cookies':
+        return <Cookies onBack={() => setCurrentView('landing')} setView={setCurrentView} />;
+      case 'tarifs_legaux':
+        return <CGV onBack={() => setCurrentView('landing')} setView={setCurrentView} />;
+      default:
+        return (
+          <motion.div
+            key="landing"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.section 
+              id="accueil"
+              style={{ opacity: heroOpacity, scale: heroScale }}
+              className="relative pt-32 pb-20 md:pt-32 md:pb-32 overflow-hidden min-h-screen flex items-center justify-center px-4"
+            >
+              <div className="container relative z-10 flex flex-col items-center text-center px-2 md:px-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col items-center w-full"
+                >
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
+                    <div className="flex -space-x-3 md:-space-x-4">
+                      {[1, 2, 3, 4].map((i) => (
+                        <div key={i} className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-cream bg-sand-light overflow-hidden shadow-xl">
+                          <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="User" className="w-full h-full object-cover" />
+                        </div>
+                      ))}
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-cream bg-chocolate flex items-center justify-center text-[9px] md:text-[10px] font-bold text-cream">
+                        +120
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-0.5 items-center">
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} size={10} className="text-[#FFB800] fill-[#FFB800]" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] md:text-[12px] font-bold uppercase tracking-[0.15em] text-chocolate/60">
+                        Standard Excellence <span className="text-chocolate">120+ marques</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="inline-flex items-center gap-2 md:gap-3 text-[11px] md:text-[13px] font-black uppercase tracking-[0.5em] md:tracking-[0.8em] text-taupe mb-6 relative">
+                    <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
+                    <span className="hover:text-chocolate transition-colors duration-300">
+                      <span 
+                        className="relative font-bold underline decoration-taupe/30 underline-offset-4 cursor-pointer"
+                        onMouseEnter={() => setShowDef(true)}
+                        onMouseLeave={() => setShowDef(false)}
+                        onClick={(e) => { e.stopPropagation(); setShowDef(!showDef); }}
+                      >
+                        Transcréation
+                        <AnimatePresence>
+                          {showDef && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10, scale: 0.95, x: "-50%" }}
+                              animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
+                              exit={{ opacity: 0, y: -10, scale: 0.95, x: "-50%" }}
+                              transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                              style={{ left: "50%" }}
+                              className="absolute top-full mt-4 w-64 md:w-72 p-5 bg-white border border-chocolate/10 rounded-2xl shadow-2xl z-50 pointer-events-auto"
+                            >
+                              <div className="text-[10px] md:text-[11px] leading-relaxed text-chocolate/80 normal-case tracking-normal font-medium text-left">
+                                <p className="font-bold mb-2 text-chocolate uppercase tracking-widest text-[9px] md:text-[10px]">Définition</p>
+                                Plus qu'une traduction, la transcréation adapte votre message aux codes culturels locaux tout en préservant votre identité vocale et visuelle grâce à notre technologie d'IA.
+                              </div>
+                              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-chocolate/10 rotate-45" />
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </span>{" "}
+                      de haute facture.
+                    </span>
+                    <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
+                  </span>
+                  
+                  <h1 className="text-[40px] md:text-7xl lg:text-[85px] font-serif leading-[1] md:leading-[0.95] tracking-tighter mb-8 md:mb-10 text-chocolate max-w-5xl italic px-1">
+                    Transformez vos meilleurs UGC <br />
+                    <span className="not-italic opacity-90 text-gold relative">
+                      en machines à conversion internationales.
+                    </span>
+                  </h1>
+                  
+                  <p className="text-base md:text-xl text-chocolate/60 max-w-2xl md:max-w-3xl mb-10 md:mb-12 leading-relaxed font-medium px-2 md:px-4">
+                    Propulsez vos publicités UGC sur de nouveaux marchés en 24h. Notre IA synchronise votre voix et vos lèvres avec un réalisme chirurgical, un rendu organique indétectable pour une conversion locale maximale.
+                  </p>
+                  
+                  <div className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center w-full px-6 md:px-0">
+                    <button 
+                      onClick={() => setCurrentView('contact')}
+                      className="w-full md:w-auto group relative bg-chocolate text-cream px-10 py-4 rounded-full text-[12px] md:text-[13px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-500 shadow-xl"
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-3">
+                        Tester avec mon UGC (Gratuit) <ArrowRight size={18} />
+                      </span>
+                      <div className="absolute inset-0 bg-brown-medium translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
+                    </button>
+                    <button 
+                      onClick={() => {
+                        const el = document.getElementById('showcase');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="group flex items-center gap-3 text-chocolate font-bold uppercase tracking-widest text-[11px] md:text-[12px] hover:text-taupe transition-colors"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-chocolate/20 flex items-center justify-center group-hover:bg-chocolate group-hover:text-cream transition-all duration-500">
+                        <Play size={14} md:size={16} fill="currentColor" />
+                      </div>
+                      <span>Voir le Showreel</span>
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.section>
+
+            <div className="relative">
+              <section className="py-6 md:py-8">
+                <div className="flex whitespace-nowrap overflow-hidden">
+                  <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale">
+                    {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
+                      <span key={idx} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
+                    ))}
+                  </div>
+                  <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale" aria-hidden="true">
+                    {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
+                      <span key={`dup-${idx}`} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <motion.div 
+                style={{ opacity: darkBlockOpacity }}
+                className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(58,41,22,0.4)_0%,_transparent_70%)]" 
+              />
+              <motion.div 
+                style={{ 
+                  opacity: darkBlockOpacity,
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3C%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+                }}
+                className="absolute inset-0 pointer-events-none mix-blend-overlay" 
+              />
+
+              <div id="showcase">
+                <Showcase />
+              </div>
+
+              <section className="py-24 md:py-40 relative z-10 px-6">
+                <div className="container relative z-10">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
+                    <div className="lg:col-span-1">
+                      <FadeInView>
+                        <span className="text-taupe uppercase tracking-[0.4em] md:tracking-[0.6em] text-xs md:text-sm font-bold mb-6 block">The Methodology</span>
+                        <motion.h2 
+                          style={{ color: workflowTextColor }}
+                          className="text-3xl md:text-6xl mb-8 md:mb-10 leading-[1.1] italic"
+                        >
+                          Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span>
+                        </motion.h2>
+                        <motion.p 
+                          style={{ color: workflowSubTextColor }}
+                          className="text-base md:text-lg mb-10 md:mb-12 leading-relaxed"
+                        >
+                          Une technologie de pointe supervisée par l'œil humain. Pour un résultat indétectable, en un temps record.
+                        </motion.p>
+                        
+                        <motion.div 
+                          style={{ borderColor: workflowBorderColor }}
+                          className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t"
+                        >
+                          {[
+                            { label: "Délai moyen", value: "24h" },
+                            { label: "Précision Lip-Sync", value: "99.9%" },
+                            { label: "Coût vs Tournage", value: "-85%" }
+                          ].map((stat, i) => (
+                            <div key={i} className="flex flex-col">
+                              <span className="text-2xl md:text-3xl font-serif italic text-gold mb-1">{stat.value}</span>
+                              <motion.span 
+                                style={{ color: workflowSubTextColor }}
+                                className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]"
+                              >
+                                {stat.label}
+                              </motion.span>
+                            </div>
+                          ))}
+                        </motion.div>
+                      </FadeInView>
+                    </div>
+                    <div className="lg:col-span-1 mt-10 lg:mt-0">
+                      <div className="space-y-4">
+                        <ProcessStep 
+                          number="01" 
+                          title="Adaptation Culturelle" 
+                          desc="On ne traduit pas, on adapte. Nous réécrivons votre script avec les expressions locales pour que votre message sonne vrai." 
+                          delay={0.2} 
+                          textColor={workflowTextColor}
+                          subTextColor={workflowSubTextColor}
+                          borderColor={workflowBorderColor}
+                        />
+                        <ProcessStep 
+                          number="02" 
+                          title="Clonage Vocal" 
+                          desc="Nous capturons l'essence de votre voix. Le résultat : Vous parlez une nouvelle langue en gardant votre propre timbre." 
+                          delay={0.4} 
+                          textColor={workflowTextColor}
+                          subTextColor={workflowSubTextColor}
+                          borderColor={workflowBorderColor}
+                        />
+                        <ProcessStep 
+                          number="03" 
+                          title="Synchro Labiale" 
+                          desc="Nous réalignons le mouvement de vos lèvres. Pour que la vidéo paraisse 100% organique, jamais artificielle." 
+                          delay={0.6} 
+                          textColor={workflowTextColor}
+                          subTextColor={workflowSubTextColor}
+                          borderColor={workflowBorderColor}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="py-24 md:py-40 px-6 text-cream relative z-10 -mt-[1px]">
+                <div className="container relative">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[120px] -z-10" />
+                  <FadeInView>
+                    <div className="max-w-4xl mx-auto text-center mb-16 md:mb-20">
+                      <span className="text-gold uppercase tracking-[0.5em] text-[10px] md:text-xs font-black mb-6 block">Comparaison de Performance</span>
+                      <h2 className="text-4xl md:text-7xl text-cream mb-10 leading-[1.05] italic font-serif">
+                        Virae dépasse les <br />
+                        <span className="not-italic font-bold text-gold">limites du réel.</span>
+                      </h2>
+                      <div className="h-px w-24 bg-gold/30 mx-auto mb-10" />
+                      <p className="text-cream/60 text-lg md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
+                        Pourquoi recruter 10 ambassadeurs quand <span className="text-cream italic">votre meilleur porte-parole, c'est vous-même ?</span>
+                      </p>
+                    </div>
+                  </FadeInView>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+                    <FadeInView delay={0.2}>
+                      <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-white/5 border border-white/10 h-full">
+                        <div className="mb-10">
+                          <h3 className="text-2xl md:text-3xl font-serif italic text-white/40 mb-2">Production Classique</h3>
+                          <p className="text-xs uppercase tracking-widest text-white/20 font-bold">(Recrutement d'influenceurs locaux)</p>
+                        </div>
+                        <ul className="space-y-8">
+                          {[
+                            { title: "Logistique Produits", desc: "Envois postaux, douanes bloquées, 4 semaines d'attente." },
+                            { title: "Coûts de Production", desc: "Nouveaux cachets et frais d'agences pour chaque pays." },
+                            { title: "Uniformité Créative", desc: "Chaque influenceur change votre message et votre image." },
+                            { title: "Vitesse de Déploiement", desc: "Lancement pays par pays. Processus lent et manuel." }
+                          ].map((item, i) => (
+                            <li key={i} className="flex gap-4">
+                              <div className="mt-1 shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-white/20">
+                                <X size={14} strokeWidth={3} />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] uppercase tracking-widest font-black text-white/20">{item.title}</span>
+                                <p className="text-sm md:text-base text-white/30 font-medium leading-relaxed">{item.desc}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </FadeInView>
+
+                    <FadeInView delay={0.4}>
+                      <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-gold text-chocolate h-full shadow-[0_0_60px_-15px_rgba(212,175,55,0.3)]">
+                        <div className="mb-10">
+                          <h3 className="text-2xl md:text-3xl font-serif italic font-bold mb-2">Technologie Virae</h3>
+                          <p className="text-[10px] uppercase tracking-widest opacity-60 font-bold">(Clonage IA Haute Performance)</p>
+                        </div>
+                        <ul className="space-y-8">
+                          {[
+                            { title: "Logistique Digitale", desc: "Zéro produit à envoyer. Vidéos prêtes en 48h chrono." },
+                            { title: "Coût de Mise à l'Échelle", desc: "Une seule production. Coût par langue divisé par 10." },
+                            { title: "Contrôle Absolu", desc: "Votre visage, votre voix. Identité de marque 100% préservée." },
+                            { title: "Déploiement Mondial", desc: "USA, Japon, Europe. Lancement simultané en 1 jour." }
+                          ].map((item, i) => (
+                            <li key={i} className="flex gap-4">
+                              <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-chocolate text-cream flex items-center justify-center shadow-lg">
+                                <Check size={14} strokeWidth={3} />
+                              </div>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] uppercase tracking-[0.2em] font-black opacity-60">{item.title}</span>
+                                <p className="text-sm md:text-base font-bold leading-relaxed">{item.desc}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-12 pt-8 border-t border-chocolate/10">
+                          <p className="text-xs font-black uppercase tracking-widest opacity-60 mb-2">Résultat</p>
+                          <p className="text-lg font-serif italic font-bold">Domination mondiale immédiate.</p>
+                        </div>
+                      </div>
+                    </FadeInView>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div className="-mt-[1px]">
+              <QualityControl 
+                textColor={workflowTextColor}
+                subTextColor={workflowSubTextColor}
+                borderColor={workflowBorderColor}
+                cardBg={qcCardBg}
+                iconBg={workflowIconBg}
+                iconColor={workflowIconColor}
+              />
+            </div>
+
+            <section id="expertise" className="py-24 md:py-40 relative px-6">
+              <div className="container">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 1 }}
+                  >
+                    <h2 className="text-3xl md:text-5xl mb-6 md:mb-8 leading-[1.1] italic text-chocolate">Une présence <span className="not-italic font-bold text-gold">indiscernable.</span></h2>
+                    <div className="space-y-4 md:space-y-6 text-sm md:text-base text-chocolate/60 mb-10 leading-relaxed font-medium max-w-lg">
+                      <p>Là où la technologie traditionnelle se heurte à la "vallée de l'étrange", Virae franchit la frontière de l'invisible. Notre processus est une restitution fidèle de l'essence de votre message.</p>
+                      <p>Chaque micro-expression et chaque respiration sont réanalysées pour s'adapter organiquement à la nouvelle langue. Le résultat est une nouvelle version originale de vous-même.</p>
+                    </div>
+                  </motion.div>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 1.2 }}
+                    className="relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50"
+                  >
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-80" alt="Studio Virae" />
+                  </motion.div>
+                </div>
+              </div>
+            </section>
+
+            <section className="py-24 md:py-40 w-full">
+              <div className="w-full mb-2 md:mb-4 text-center px-6">
+                <FadeInView>
+                  <h2 className="text-3xl md:text-5xl font-serif italic mb-4 text-chocolate">Quelques unes de nos créations.</h2>
+                  <p className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-bold text-taupe opacity-60">Virae Selection</p>
+                </FadeInView>
+              </div>
+              <div className="w-full max-w-[1600px] mx-auto px-4">
+                <div className="relative flex w-full group">
+                  <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <PhoneMockup 
+                        key={i}
+                        langList={[
+                          { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                          { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                          { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                        ]}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0" aria-hidden="true">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <PhoneMockup 
+                        key={`dup-${i}`}
+                        langList={[
+                          { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
+                          { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
+                          { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
+                        ]}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="tarifs" className="py-24 md:py-40 px-2 md:px-6">
+              <div className="container mx-auto">
+                <div className="text-center mb-16 md:mb-20">
+                  <FadeInView>
+                    <h2 className="text-3xl md:text-6xl font-serif italic mb-4 md:mb-6 text-chocolate">Investissez dans votre <span className="not-italic text-gold">omniprésence.</span></h2>
+                    <p className="text-[10px] md:text-sm uppercase tracking-[0.4em] font-black text-taupe">Plans & Tarifs</p>
+                  </FadeInView>
+                </div>
+                <div className="mb-20">
+                  <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-xl rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 border border-white/50 shadow-2xl">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                      <div className="text-center md:text-left">
+                        <h3 className="text-2xl md:text-3xl font-serif italic text-chocolate mb-2">Configurez votre expansion.</h3>
+                        <p className="text-sm text-chocolate/50 font-medium">Choisissez le volume de vidéos transcréées dont vous avez besoin.</p>
+                      </div>
+                      <div className="flex items-center gap-4 bg-chocolate/5 px-6 py-3 rounded-2xl border border-chocolate/5">
+                        <span className="text-3xl md:text-4xl font-bold text-chocolate tabular-nums">{videoCount}</span>
+                        <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-taupe leading-tight">Vidéos<br />Transcréées</span>
+                      </div>
+                    </div>
+                    <div className="relative h-12 flex items-center mb-16">
+                      <style>{`
+                        .pricing-slider { -webkit-appearance: none; width: 100%; height: 6px; background: rgba(41, 28, 14, 0.1); border-radius: 10px; outline: none; cursor: pointer; }
+                        .pricing-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: #291C0E; border: 4px solid #F9F7F2; border-radius: 50%; box-shadow: 0 10px 20px rgba(41,28,14,0.2); transition: all 0.3s ease; }
+                        .pricing-slider::-webkit-slider-thumb:hover { transform: scale(1.1); box-shadow: 0 15px 30px rgba(41,28,14,0.3); }
+                      `}</style>
+                      <input 
+                        type="range" min="1" max="20" defaultValue="5"
+                        className="pricing-slider" id="video-range"
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value);
+                          const event = new CustomEvent('videoCountChange', { detail: val });
+                          window.dispatchEvent(event);
+                        }}
+                      />
+                      <div className="absolute top-10 left-0 right-0 h-6">
+                        {[1, 5, 10, 15, 20].map(val => {
+                          const percent = (val - 1) / 19;
+                          return (
+                            <span key={val} className="absolute text-[10px] font-black text-chocolate/30 -translate-x-1/2" style={{ left: `calc(${percent * 100}% + ${(14 - percent * 28)}px)` }}>{val}</span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      {(() => {
+                        const scalePrice = (videoCount * 85) + 95;
+                        const blitzPrice = videoCount * 95;
+                        const isBlitzAvailable = videoCount >= 5;
+                        const getScaleDelivery = (count) => {
+                          if (count === 1) return "24h";
+                          if (count === 2) return "48h";
+                          if (count <= 4) return "72h";
+                          return `${Math.floor(count * 0.8)} jours`;
+                        };
+                        const getBlitzDelivery = (count) => {
+                          if (count <= 6) return "48h"; 
+                          if (count <= 12) return "72h";
+                          return "4 jours";
+                        };
+                        return (
+                          <>
+                            <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/60 border border-chocolate/5 flex flex-col transition-all duration-500 hover:shadow-xl">
+                              <div className="mb-8">
+                                <div className="flex justify-between items-start mb-2"><h3 className="text-xl md:text-2xl font-serif italic text-chocolate">Scale Express</h3><span className="text-[10px] font-black text-taupe bg-taupe/10 px-2 py-1 rounded-md">Standard</span></div>
+                                <div className="flex items-baseline gap-1"><span className="text-3xl md:text-4xl font-bold tabular-nums">€{scalePrice}</span></div>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-chocolate/40 mt-1">95€ Empreinte IA + {videoCount * 85}€ vidéos</p>
+                              </div>
+                              <ul className="space-y-3 mb-10 flex-grow">
+                                {[`${videoCount} Vidéo${videoCount > 1 ? 's' : ''} (jusqu'à 60s)`, `Livraison : ${getScaleDelivery(videoCount)}`, "Création Empreinte Vocale (95€)", "Précision Lip-Sync Standard", "Support par Email"].map((f, i) => (
+                                  <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70"><div className={`w-1.5 h-1.5 rounded-full ${i === 1 ? 'bg-orange-400' : 'bg-chocolate/20'}`} />{f}</li>
+                                ))}
+                              </ul>
+                              <button 
+                                onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
+                                className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-chocolate text-cream hover:bg-taupe transition-all duration-500"
+                              >
+                                Essai Gratuit
+                              </button>
+                            </div>
+                            <div className={`p-6 md:p-10 rounded-[2.5rem] flex flex-col transition-all duration-700 ${isBlitzAvailable ? 'bg-chocolate text-cream shadow-2xl scale-105 z-10 border border-gold/30' : 'bg-white/20 opacity-40 grayscale pointer-events-none'}`}>
+                              {isBlitzAvailable && <div className="flex justify-between items-center mb-6"><span className="bg-gold text-chocolate text-[9px] font-black uppercase px-4 py-1 rounded-full">Plus Populaire</span><span className="text-[10px] font-black text-gold">Haute Précision</span></div>}
+                              <div className="mb-8">
+                                <h3 className={`text-xl md:text-2xl font-serif italic mb-2 ${isBlitzAvailable ? 'text-gold' : 'text-chocolate'}`}>Global Blitz</h3>
+                                <div className="flex items-baseline gap-1"><span className="text-3xl md:text-4xl font-bold tabular-nums">€{blitzPrice}</span></div>
+                                <p className={`text-[10px] font-black uppercase ${isBlitzAvailable ? 'opacity-40' : 'opacity-30'}`}>{isBlitzAvailable ? "0€ Empreinte — Qualité Studio +" : "Disponible dès 5 vidéos"}</p>
+                              </div>
+                              <ul className="space-y-3 mb-10 flex-grow">
+                                {[`${videoCount} Vidéos Transcréées (jusqu'à 60s)`, `Livraison Prioritaire : ${getBlitzDelivery(videoCount)}`, "1 Hook Alternatif OFFERT / vidéo", "Adaptation Culturelle du Script", "Empreinte Vocale OFFERTE"].map((f, i) => (
+                                  <li key={i} className="flex items-center gap-3 text-[12px] font-medium"><div className={`w-1.5 h-1.5 rounded-full ${isBlitzAvailable ? (i === 1 ? 'bg-gold animate-pulse' : 'bg-gold') : 'bg-chocolate/20'}`} /><span className={isBlitzAvailable ? 'opacity-90' : 'opacity-70'}>{f}</span></li>
+                                ))}
+                              </ul>
+                              <button 
+                                onClick={() => { if (isBlitzAvailable) { setCurrentView('contact'); setActiveNav('contact'); } }}
+                                className={`w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-500 ${
+                                isBlitzAvailable ? 'bg-gold text-chocolate hover:bg-white' : 'bg-white/10 text-white/30'
+                              }`}>
+                                {isBlitzAvailable ? 'Essai Gratuit' : 'Bientôt disponible'}
+                              </button>
+                            </div>
+                            <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/40 border border-white/50 flex flex-col">
+                              <div className="mb-8">
+                                <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Empire Growth</h3>
+                                <div className="flex items-baseline gap-1"><span className="text-3xl md:text-4xl font-bold">€2 490</span><span className="text-xs ml-1 opacity-40">/mois</span></div>
+                                <p className="text-[10px] font-black uppercase text-chocolate/30">Volume Illimité</p>
+                              </div>
+                              <ul className="space-y-3 mb-10 flex-grow">
+                                {["30 Vidéos / mois (jusqu'à 60s)", "A/B Testing Hook Illimité", "Expertise Scripting Local", "Chef de Projet Dédié", "Creative Strategy"].map((f, i) => (
+                                  <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70"><div className="w-1.5 h-1.5 rounded-full bg-chocolate/20" />{f}</li>
+                                ))}
+                              </ul>
+                              <button 
+                                onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
+                                className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white border border-chocolate/10 text-chocolate hover:bg-chocolate hover:text-cream transition-all duration-500"
+                              >
+                                Demander une démo
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="max-w-2xl mx-auto mt-12 bg-white/30 border border-chocolate/10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4 text-center md:text-left shadow-sm">
+                      <div className="w-12 h-12 rounded-full bg-gold/20 text-gold flex items-center justify-center shrink-0 border border-gold/30"><Sparkles size={20} /></div>
+                      <div><p className="text-[11px] md:text-xs font-bold text-chocolate uppercase tracking-widest mb-1">Garantie Indétectable</p><p className="text-[10px] md:text-[11px] text-chocolate/70 font-medium leading-relaxed">Si la synchronisation labiale n'est pas 100% naturelle et bluffante, nous régénérons votre vidéo gratuitement jusqu'à perfection absolue.</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="pt-10 md:pt-16 pb-20 md:pb-32 px-6">
+              <div className="container text-center">
+                <FadeInView>
+                  <h2 className="text-2xl md:text-6xl font-serif italic max-w-5xl mx-auto mb-10 md:mb-16 text-chocolate leading-snug">"Virae est une <span className="text-gold not-italic">révolution culturelle</span> pour notre distribution globale."</h2>
+                  <div className="flex flex-col items-center"><span className="text-[11px] md:text-sm font-black uppercase tracking-[0.2em] text-chocolate">Marc-Antoine D.</span><span className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-taupe mt-1">Global Creative Director, L'Oréal Paris</span></div>
+                </FadeInView>
+              </div>
+            </section>
+
+            <FAQ />
+
+            <footer className="bg-chocolate pt-20 md:pt-32 pb-12 text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
+              <div className="container relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-24">
+                  <div className="flex flex-col gap-6 md:gap-8">
+                    <a href="#" className="font-serif text-[24px] md:text-[28px] font-black tracking-tighter text-cream group relative w-fit">VIRAE<span className="text-gold">.</span></a>
+                    <p className="text-cream/50 text-sm leading-relaxed max-w-[240px] font-medium">L'intelligence artificielle au service de l'émotion humaine. Exportez votre vision sans limites.</p>
+                    <div className="flex gap-4">{['Instagram', 'LinkedIn', 'X'].map((social) => (<a key={social} href={`https://${social.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500">{social[0]}</a>))}</div>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-0 lg:col-span-2 lg:grid-cols-2">
+                    <div>
+                      <h4 className="text-gold uppercase tracking-[0.2em] text-[10px] font-black mb-6">Navigation</h4>
+                      <ul className="space-y-3">{['Accueil', 'Expertise', 'Tarifs', 'FAQ', 'Contact'].map((item) => (
+                        <li key={item}><button onClick={() => { if (item === 'Contact') { setCurrentView('contact'); setActiveNav('contact'); } else { setCurrentView('landing'); setActiveNav(item.toLowerCase()); setTimeout(() => { const el = document.getElementById(item.toLowerCase()); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100); } }} className="text-cream/60 hover:text-gold text-sm font-medium transition-colors text-left">{item}</button></li>
+                      ))}</ul>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-gold uppercase tracking-[0.2em] text-[10px] font-black mb-6">Contact</h4>
+                    <div className="space-y-6">
+                      <div><p className="text-[9px] uppercase tracking-widest text-cream/30 mb-1">Collaboration</p><a href="mailto:contact@viraestudio.com" className="text-base font-serif italic hover:text-gold transition-colors">contact@viraestudio.com</a></div>
+                      <div><p className="text-[9px] uppercase tracking-widest text-cream/30 mb-1">Bureaux</p><p className="text-cream/60 text-sm leading-relaxed">80 Rue de Turenne,<br />75003 Paris, France</p></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="text-[9px] font-bold tracking-[0.3em] uppercase opacity-30">© 2026 VIRAE STUDIO.</div>
+                  <div className="flex gap-6">
+                    <button onClick={() => setCurrentView('mentions')} className="text-[9px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity">Mentions Légales</button>
+                    <button onClick={() => setCurrentView('confidentialite')} className="text-[9px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity">Confidentialité</button>
+                    <button onClick={() => setCurrentView('cookies')} className="text-[9px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity">Cookies</button>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </motion.div>
+        );
+    }
+  };
 
   return (
     <>
@@ -524,806 +1049,16 @@ const App = () => {
         style={{ backgroundColor: currentView === 'landing' ? bgColor : "#F9F7F2" }}
         className="min-h-screen selection:bg-chocolate selection:text-cream text-[#291C0E] relative overflow-hidden transition-colors duration-500"
       >
-        {/* Premium Background Effects */}
         <div className="fixed inset-0 pointer-events-none z-0">
           <div className="absolute top-[-10%] left-[-10%] w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sand-light/30 rounded-full blur-[80px] md:blur-[120px] animate-float" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-taupe/20 rounded-full blur-[70px] md:blur-[100px] animate-float" style={{ animationDelay: '-5s' }} />
         </div>
-
         <div className="relative z-10">
           <AnimatePresence mode="wait">
-          {currentView === 'landing' ? (
-            <motion.div
-              key="landing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              {/* Hero Section */}
-              <motion.section 
-                id="accueil"
-                style={{ opacity: heroOpacity, scale: heroScale }}
-                className="relative pt-40 pb-20 md:pt-32 md:pb-12 overflow-hidden min-h-[90vh] md:min-h-[80vh] flex items-center justify-center px-4"
-              >
-                <div className="container relative z-10 flex flex-col items-center text-center px-2 md:px-4">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center w-full"
-                  >
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
-                      <div className="flex -space-x-3 md:-space-x-4">
-                        {[1, 2, 3, 4].map((i) => (
-                          <div key={i} className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-cream bg-sand-light overflow-hidden shadow-xl">
-                            <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="User" className="w-full h-full object-cover" />
-                          </div>
-                        ))}
-                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-cream bg-chocolate flex items-center justify-center text-[9px] md:text-[10px] font-bold text-cream">
-                          +120
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-0.5 items-center">
-                        <div className="flex gap-1">
-                          {[1, 2, 3, 4, 5].map((s) => (
-                            <Star key={s} size={10} className="text-[#FFB800] fill-[#FFB800]" />
-                          ))}
-                        </div>
-                        <span className="text-[10px] md:text-[12px] font-bold uppercase tracking-[0.15em] text-chocolate/60">
-                          Standard Excellence <span className="text-chocolate">120+ marques</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <span className="inline-flex items-center gap-2 md:gap-3 text-[11px] md:text-[13px] font-black uppercase tracking-[0.5em] md:tracking-[0.8em] text-taupe mb-6 relative">
-                      <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
-                      <span className="hover:text-chocolate transition-colors duration-300">
-                        <span 
-                          className="relative font-bold underline decoration-taupe/30 underline-offset-4 cursor-pointer"
-                          onMouseEnter={() => setShowDef(true)}
-                          onMouseLeave={() => setShowDef(false)}
-                          onClick={(e) => { e.stopPropagation(); setShowDef(!showDef); }}
-                        >
-                          Transcréation
-                          <AnimatePresence>
-                            {showDef && (
-                              <motion.div
-                                initial={{ opacity: 0, y: -10, scale: 0.95, x: "-50%" }}
-                                animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
-                                exit={{ opacity: 0, y: -10, scale: 0.95, x: "-50%" }}
-                                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                                style={{ left: "50%" }}
-                                className="absolute top-full mt-4 w-64 md:w-72 p-5 bg-white border border-chocolate/10 rounded-2xl shadow-2xl z-50 pointer-events-auto"
-                              >
-                                <div className="text-[10px] md:text-[11px] leading-relaxed text-chocolate/80 normal-case tracking-normal font-medium text-left">
-                                  <p className="font-bold mb-2 text-chocolate uppercase tracking-widest text-[9px] md:text-[10px]">Définition</p>
-                                  Plus qu'une traduction, la transcréation adapte votre message aux codes culturels locaux tout en préservant votre identité vocale et visuelle grâce à notre technologie d'IA.
-                                </div>
-                                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-chocolate/10 rotate-45" />
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </span>{" "}
-                        de haute facture.
-                      </span>
-                      <div className="w-6 md:w-10 h-[1px] bg-taupe/30" />
-                    </span>
-                    
-                    <h1 className="text-[40px] md:text-7xl lg:text-[85px] font-serif leading-[1] md:leading-[0.95] tracking-tighter mb-8 md:mb-10 text-chocolate max-w-5xl italic px-1">
-                      Transformez vos meilleurs UGC <br />
-                      <span className="not-italic opacity-90 text-gold relative">
-                        en machines à conversion internationales.
-                      </span>
-                    </h1>
-                    
-                    <p className="text-base md:text-xl text-chocolate/60 max-w-2xl md:max-w-3xl mb-10 md:mb-12 leading-relaxed font-medium px-2 md:px-4">
-                      Propulsez vos publicités UGC sur de nouveaux marchés en 24h. Notre IA synchronise votre voix et vos lèvres avec un réalisme chirurgical, un rendu organique indétectable pour une conversion locale maximale.
-                    </p>
-                    
-                    <div className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center w-full px-6 md:px-0">
-                      <button 
-                        onClick={() => setCurrentView('contact')}
-                        className="w-full md:w-auto group relative bg-chocolate text-cream px-10 py-4 rounded-full text-[12px] md:text-[13px] font-bold uppercase tracking-widest overflow-hidden transition-all duration-700 shadow-xl"
-                      >
-                        <span className="relative z-10 flex items-center justify-center gap-3">
-                          Lancer mon expansion <ArrowRight size={18} />
-                        </span>
-                        <div className="absolute inset-0 bg-brown-medium translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
-                      </button>
-                      <button 
-                        onClick={() => {
-                          const el = document.getElementById('showcase');
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="group flex items-center gap-3 text-chocolate font-bold uppercase tracking-widest text-[11px] md:text-[12px] hover:text-taupe transition-colors"
-                      >
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-chocolate/20 flex items-center justify-center group-hover:bg-chocolate group-hover:text-cream transition-all duration-500">
-                          <Play size={14} md:size={16} fill="currentColor" />
-                        </div>
-                        <span>Voir le Showreel</span>
-                      </button>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.section>
-
-              <div className="relative">
-                {/* Logo Bar - Scrolling Marquee */}
-                <section className="py-6 md:py-8">
-                  <div className="flex whitespace-nowrap overflow-hidden">
-                    <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale">
-                      {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
-                        <span key={idx} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
-                      ))}
-                    </div>
-                    <div className="flex animate-marquee gap-16 md:gap-24 items-center px-12 opacity-15 grayscale" aria-hidden="true">
-                      {['L\'OREAL', 'GYMSHARK', 'HELLOFRESH', 'SAMSUNG', 'SHOPIFY', 'NIKE', 'ADIDAS', 'PRADA', 'GUCCI'].map((logo, idx) => (
-                        <span key={`dup-${idx}`} className="font-serif text-base md:text-xl font-black tracking-tighter text-chocolate">{logo}</span>
-                      ))}
-                    </div>
-                  </div>
-                </section>
-
-                {/* Unified Background Gradient with Grain/Dithering Effect */}
-                <motion.div 
-                  style={{ opacity: darkBlockOpacity }}
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(58,41,22,0.4)_0%,_transparent_70%)]" 
-                />
-                <motion.div 
-                  style={{ 
-                    opacity: darkBlockOpacity,
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3C%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-                  }}
-                  className="absolute inset-0 pointer-events-none mix-blend-overlay" 
-                />
-
-                <div id="showcase">
-                  <Showcase />
-                </div>
-
-                {/* Workflow Section */}
-                <section className="pt-24 pb-12 md:pt-32 md:pb-16 relative z-10 px-6">
-                  <div className="container relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
-                      <div className="lg:col-span-1">
-                        <FadeInView>
-                          <span className="text-taupe uppercase tracking-[0.4em] md:tracking-[0.6em] text-xs md:text-sm font-bold mb-6 block">The Methodology</span>
-                          <motion.h2 
-                            style={{ color: workflowTextColor }}
-                            className="text-3xl md:text-6xl mb-8 md:mb-10 leading-[1.1] italic"
-                          >
-                            Le Protocole <br /><span className="not-italic text-gold opacity-100">Natif.</span>
-                          </motion.h2>
-                          <motion.p 
-                            style={{ color: workflowSubTextColor }}
-                            className="text-base md:text-lg mb-10 md:mb-12 leading-relaxed"
-                          >
-                            Une technologie de pointe supervisée par l'œil humain. Pour un résultat indétectable, en un temps record.
-                          </motion.p>
-                          
-                          <motion.div 
-                            style={{ borderColor: workflowBorderColor }}
-                            className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 pt-8 border-t"
-                          >
-                            {[
-                              { label: "Délai moyen", value: "24h" },
-                              { label: "Précision Lip-Sync", value: "99.9%" },
-                              { label: "Coût vs Tournage", value: "-85%" }
-                            ].map((stat, i) => (
-                              <div key={i} className="flex flex-col">
-                                <span className="text-2xl md:text-3xl font-serif italic text-gold mb-1">{stat.value}</span>
-                                <motion.span 
-                                  style={{ color: workflowSubTextColor }}
-                                  className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]"
-                                >
-                                  {stat.label}
-                                </motion.span>
-                              </div>
-                            ))}
-                          </motion.div>
-                        </FadeInView>
-                      </div>
-                      <div className="lg:col-span-1 mt-10 lg:mt-0">
-                        <div className="space-y-4">
-                          <ProcessStep 
-                            number="01" 
-                            title="Adaptation Culturelle" 
-                            desc="On ne traduit pas, on adapte. Nous réécrivons votre script avec les expressions locales pour que votre message sonne vrai." 
-                            delay={0.2} 
-                            textColor={workflowTextColor}
-                            subTextColor={workflowSubTextColor}
-                            borderColor={workflowBorderColor}
-                          />
-                          <ProcessStep 
-                            number="02" 
-                            title="Clonage Vocal" 
-                            desc="Nous capturons l'essence de votre voix. Le résultat : Vous parlez une nouvelle langue en gardant votre propre timbre." 
-                            delay={0.4} 
-                            textColor={workflowTextColor}
-                            subTextColor={workflowSubTextColor}
-                            borderColor={workflowBorderColor}
-                          />
-                          <ProcessStep 
-                            number="03" 
-                            title="Synchro Labiale" 
-                            desc="Nous réalignons le mouvement de vos lèvres. Pour que la vidéo paraisse 100% organique, jamais artificielle." 
-                            delay={0.6} 
-                            textColor={workflowTextColor}
-                            subTextColor={workflowSubTextColor}
-                            borderColor={workflowBorderColor}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Comparison Section - High Impact */}
-                <section className="pt-12 pb-24 md:pt-16 md:pb-40 px-6 text-cream relative z-10 -mt-[1px]">
-                  <div className="container relative">
-                    {/* Background Accents */}
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[120px] -z-10" />
-                    
-                    <FadeInView>
-                      <div className="max-w-4xl mx-auto text-center mb-16 md:mb-20">
-                        <span className="text-gold uppercase tracking-[0.5em] text-[10px] md:text-xs font-black mb-6 block">Comparaison de Performance</span>
-                        <h2 className="text-4xl md:text-7xl text-cream mb-10 leading-[1.05] italic font-serif">
-                          Virae dépasse les <br />
-                          <span className="not-italic font-bold text-gold">limites du réel.</span>
-                        </h2>
-                        <div className="h-px w-24 bg-gold/30 mx-auto mb-10" />
-                        <p className="text-cream/60 text-lg md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
-                          Pourquoi recruter 10 ambassadeurs quand <span className="text-cream italic">votre meilleur porte-parole, c'est vous-même ?</span>
-                        </p>
-                      </div>
-                    </FadeInView>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
-                      {/* The Old Way */}
-                      <FadeInView delay={0.2}>
-                        <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-white/5 border border-white/10 h-full">
-                          <div className="mb-10">
-                            <h3 className="text-2xl md:text-3xl font-serif italic text-white/40 mb-2">Production Classique</h3>
-                            <p className="text-xs uppercase tracking-widest text-white/20 font-bold">(Recrutement d'influenceurs locaux)</p>
-                          </div>
-                          
-                          <ul className="space-y-8">
-                            {[
-                              { title: "Logistique Produits", desc: "Envois postaux, douanes bloquées, 4 semaines d'attente." },
-                              { title: "Coûts de Production", desc: "Nouveaux cachets et frais d'agences pour chaque pays." },
-                              { title: "Uniformité Créative", desc: "Chaque influenceur change votre message et votre image." },
-                              { title: "Vitesse de Déploiement", desc: "Lancement pays par pays. Processus lent et manuel." }
-                            ].map((item, i) => (
-                              <li key={i} className="flex gap-4">
-                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-white/20">
-                                  <X size={14} strokeWidth={3} />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-[10px] uppercase tracking-widest font-black text-white/20">{item.title}</span>
-                                  <p className="text-sm md:text-base text-white/30 font-medium leading-relaxed">{item.desc}</p>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </FadeInView>
-
-                      {/* The Virae Way */}
-                      <FadeInView delay={0.4}>
-                        <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-gold text-chocolate h-full shadow-[0_0_60px_-15px_rgba(212,175,55,0.3)]">
-                          <div className="mb-10">
-                            <h3 className="text-2xl md:text-3xl font-serif italic font-bold mb-2">Technologie Virae</h3>
-                            <p className="text-[10px] uppercase tracking-widest opacity-60 font-bold">(Clonage IA Haute Performance)</p>
-                          </div>
-                          
-                          <ul className="space-y-8">
-                            {[
-                              { title: "Logistique Digitale", desc: "Zéro produit à envoyer. Vidéos prêtes en 48h chrono." },
-                              { title: "Coût de Mise à l'Échelle", desc: "Une seule production. Coût par langue divisé par 10." },
-                              { title: "Contrôle Absolu", desc: "Votre visage, votre voix. Identité de marque 100% préservée." },
-                              { title: "Déploiement Mondial", desc: "USA, Japon, Europe. Lancement simultané en 1 jour." }
-                            ].map((item, i) => (
-                              <li key={i} className="flex gap-4">
-                                <div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-chocolate text-cream flex items-center justify-center shadow-lg">
-                                  <Check size={14} strokeWidth={3} />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-[10px] uppercase tracking-[0.2em] font-black opacity-60">{item.title}</span>
-                                  <p className="text-sm md:text-base font-bold leading-relaxed">{item.desc}</p>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <div className="mt-12 pt-8 border-t border-chocolate/10">
-                            <p className="text-xs font-black uppercase tracking-widest opacity-60 mb-2">Résultat</p>
-                            <p className="text-lg font-serif italic font-bold">Domination mondiale immédiate.</p>
-                          </div>
-                        </div>
-                      </FadeInView>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              <div className="-mt-[1px]">
-                <QualityControl 
-                  textColor={workflowTextColor}
-                  subTextColor={workflowSubTextColor}
-                  borderColor={workflowBorderColor}
-                  cardBg={qcCardBg}
-                  iconBg={workflowIconBg}
-                  iconColor={workflowIconColor}
-                />
-              </div>
-
-              {/* Expertise Section */}
-              <section id="expertise" className="py-20 md:pt-16 md:pb-10 relative px-6">
-                <div className="container">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
-                    <motion.div
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-30px" }}
-                      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <h2 className="text-3xl md:text-5xl mb-6 md:mb-8 leading-[1.1] italic text-chocolate">Une présence <span className="not-italic font-bold text-gold">indiscernable.</span></h2>
-                      <div className="space-y-4 md:space-y-6 text-sm md:text-base text-chocolate/60 mb-10 leading-relaxed font-medium max-w-lg">
-                        <p>
-                          Là où la technologie traditionnelle se heurte à la "vallée de l'étrange", Virae franchit la frontière de l'invisible. Notre processus est une restitution fidèle de l'essence de votre message.
-                        </p>
-                        <p>
-                          Chaque micro-expression et chaque respiration sont réanalysées pour s'adapter organiquement à la nouvelle langue. Le résultat est une nouvelle version originale de vous-même.
-                        </p>
-                      </div>
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true, margin: "-30px" }}
-                      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative aspect-[4/5] md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/50"
-                    >
-                      <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-80" alt="Studio Virae" />
-                    </motion.div>
-                  </div>
-                </div>
-              </section>
-
-                      {/* Creations Marquee Section */}
-                      <section className="py-16 md:py-24 w-full">
-                        <div className="w-full mb-2 md:mb-4 text-center px-6">
-                          <FadeInView>
-                            <h2 className="text-3xl md:text-5xl font-serif italic mb-4 text-chocolate">Quelques unes de nos créations.</h2>
-                            <p className="text-[9px] md:text-[10px] uppercase tracking-[0.4em] md:tracking-[0.5em] font-bold text-taupe opacity-60">Virae Selection</p>
-                          </FadeInView>
-                        </div>
-
-                        <div className="w-full max-w-[1600px] mx-auto px-4">
-                          <div className="relative flex w-full group">
-                    <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <PhoneMockup 
-                          key={i}
-                          langList={[
-                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                          ]}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex gap-4 md:gap-6 animate-marquee py-20 md:py-24 pr-4 md:pr-6 shrink-0" aria-hidden="true">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <PhoneMockup 
-                          key={`dup-${i}`}
-                          langList={[
-                            { code: 'FR', flag: 'https://flagcdn.com/fr.svg', video: '/français.mp4' },
-                            { code: 'EN', flag: 'https://flagcdn.com/us.svg', video: '/anglais.mp4' },
-                            { code: 'DE', flag: 'https://flagcdn.com/de.svg', video: 'https://cdn.pixabay.com/video/2020/04/23/37198-413155169_tiny.mp4' }
-                          ]}
-                        />
-                      ))}
-                    </div>
-                          </div>
-                        </div>
-                      </section>
-
-                      {/* Pricing Section */}
-                      <section id="tarifs" className="pt-8 md:pt-12 pb-10 md:pb-16 px-2 md:px-6">
-                <div className="container mx-auto">
-                  <div className="text-center mb-16 md:mb-20">
-                    <FadeInView>
-                      <h2 className="text-3xl md:text-6xl font-serif italic mb-4 md:mb-6 text-chocolate">Investissez dans votre <span className="not-italic text-gold">omniprésence.</span></h2>
-                      <p className="text-[10px] md:text-sm uppercase tracking-[0.4em] font-black text-taupe">Plans & Tarifs</p>
-                    </FadeInView>
-                  </div>
-
-                  {/* Dynamic Pricing Selector */}
-                  <div className="mb-20">
-                    <div className="max-w-5xl mx-auto bg-white/40 backdrop-blur-xl rounded-[2rem] md:rounded-[3rem] p-4 md:p-12 border border-white/50 shadow-2xl">
-                      <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                        <div className="text-center md:text-left">
-                          <h3 className="text-2xl md:text-3xl font-serif italic text-chocolate mb-2">Configurez votre expansion.</h3>
-                          <p className="text-sm text-chocolate/50 font-medium">Choisissez le volume de vidéos transcréées dont vous avez besoin.</p>
-                        </div>
-                        <div className="flex items-center gap-4 bg-chocolate/5 px-6 py-3 rounded-2xl border border-chocolate/5">
-                          <span className="text-3xl md:text-4xl font-bold text-chocolate tabular-nums">
-                            {videoCount}
-                          </span>
-                          <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-taupe leading-tight">
-                            Vidéos<br />Transcréées
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="relative h-12 flex items-center mb-16">
-                        {/* Custom Slider Styling */}
-                        <style>{`
-                          .pricing-slider {
-                            -webkit-appearance: none;
-                            width: 100%;
-                            height: 6px;
-                            background: rgba(41, 28, 14, 0.1);
-                            border-radius: 10px;
-                            outline: none;
-                            cursor: pointer;
-                          }
-                          .pricing-slider::-webkit-slider-thumb {
-                            -webkit-appearance: none;
-                            width: 28px;
-                            height: 28px;
-                            background: #291C0E;
-                            border: 4px solid #F9F7F2;
-                            border-radius: 50%;
-                            box-shadow: 0 10px 20px rgba(41,28,14,0.2);
-                            transition: all 0.3s ease;
-                          }
-                          .pricing-slider::-webkit-slider-thumb:hover {
-                            transform: scale(1.1);
-                            box-shadow: 0 15px 30px rgba(41,28,14,0.3);
-                          }
-                        `}</style>
-                        <input 
-                          type="range" 
-                          min="1" 
-                          max="20" 
-                          defaultValue="5"
-                          className="pricing-slider"
-                          id="video-range"
-                          onChange={(e) => {
-                            const val = parseInt(e.target.value);
-                            const event = new CustomEvent('videoCountChange', { detail: val });
-                            window.dispatchEvent(event);
-                          }}
-                        />
-                        <div className="absolute top-10 left-0 right-0 h-6">
-                          {[1, 5, 10, 15, 20].map(val => {
-                            const percent = (val - 1) / 19;
-                            return (
-                              <span 
-                                key={val} 
-                                className="absolute text-[10px] font-black text-chocolate/30 -translate-x-1/2"
-                                style={{ 
-                                  left: `calc(${percent * 100}% + ${(14 - percent * 28)}px)` 
-                                }}
-                              >
-                                {val}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {(() => {
-                          // Pricing: 85/vid + 95 setup for Scale, 95/vid (all-in) for Blitz
-                          const scalePrice = (videoCount * 85) + 95;
-                          const blitzPrice = videoCount * 95;
-                          const isBlitzAvailable = videoCount >= 5;
-
-                          // Realistic Non-linear Delivery Logic
-                          // Scale: Standard queue
-                          const getScaleDelivery = (count) => {
-                            if (count === 1) return "24h";
-                            if (count === 2) return "48h";
-                            if (count <= 4) return "72h";
-                            return `${Math.floor(count * 0.8)} jours`;
-                          };
-
-                          // Blitz: Priority queue - Faster than scale for same volume
-                          const getBlitzDelivery = (count) => {
-                            if (count <= 6) return "48h"; 
-                            if (count <= 12) return "72h";
-                            return "4 jours";
-                          };
-
-                          return (
-                            <>
-                              {/* Scale Express Card */}
-                              <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/60 border border-chocolate/5 flex flex-col transition-all duration-500 hover:shadow-xl">                                <div className="mb-8">
-                                  <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-xl md:text-2xl font-serif italic text-chocolate">Scale Express</h3>
-                                    <span className="text-[10px] font-black text-taupe bg-taupe/10 px-2 py-1 rounded-md">Standard</span>
-                                  </div>
-                                  <div className="flex items-baseline gap-1">
-                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter tabular-nums">€{scalePrice}</span>
-                                  </div>
-                                  <p className="text-[9px] font-black uppercase tracking-widest text-chocolate/40 mt-1">
-                                    95€ Empreinte IA + {videoCount * 85}€ vidéos
-                                  </p>
-                                </div>
-                                <ul className="space-y-3 mb-10 flex-grow">
-                                  {[
-                                    `${videoCount} Vidéo${videoCount > 1 ? 's' : ''} (jusqu'à 60s)`,
-                                    `Livraison : ${getScaleDelivery(videoCount)}`,
-                                    "Création Empreinte Vocale (95€)",
-                                    "Précision Lip-Sync Standard",
-                                    "Support par Email"
-                                  ].map((f, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70">
-                                      <div className={`w-1.5 h-1.5 rounded-full ${i === 1 ? 'bg-orange-400' : 'bg-chocolate/20'}`} />
-                                      {f}
-                                    </li>
-                                  ))}
-                                </ul>
-                                <button 
-                                  onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
-                                  className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-chocolate text-cream hover:bg-taupe transition-all duration-500"
-                                >
-                                  Lancer Scale
-                                </button>
-                              </div>
-
-                              {/* Global Blitz Card */}
-                              <div className={`p-6 md:p-10 rounded-[2.5rem] flex flex-col transition-all duration-700 ${                                isBlitzAvailable 
-                                  ? 'bg-chocolate text-cream shadow-2xl scale-105 z-10 border border-gold/30' 
-                                  : 'bg-white/20 opacity-40 grayscale pointer-events-none'
-                              }`}>
-                                {isBlitzAvailable && (
-                                  <div className="flex justify-between items-center mb-6">
-                                    <span className="bg-gold text-chocolate text-[9px] font-black uppercase tracking-widest px-4 py-1 rounded-full w-fit">
-                                      Plus Populaire
-                                    </span>
-                                    <span className="text-[10px] font-black text-gold">Haute Précision</span>
-                                  </div>
-                                )}
-                                <div className="mb-8">
-                                  <h3 className={`text-xl md:text-2xl font-serif italic mb-2 ${isBlitzAvailable ? 'text-gold' : 'text-chocolate'}`}>Global Blitz</h3>
-                                  <div className="flex items-baseline gap-1">
-                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter tabular-nums">€{blitzPrice}</span>
-                                  </div>
-                                  <p className={`text-[10px] font-black uppercase tracking-widest ${isBlitzAvailable ? 'opacity-40' : 'opacity-30'}`}>
-                                    {isBlitzAvailable ? "0€ Empreinte — Qualité Studio +" : "Disponible dès 5 vidéos"}
-                                  </p>
-                                </div>
-                                <ul className="space-y-3 mb-10 flex-grow">
-                                  {[
-                                    `${videoCount} Vidéos Transcréées (jusqu'à 60s)`,
-                                    `Livraison Prioritaire : ${getBlitzDelivery(videoCount)}`,
-                                    "1 Hook Alternatif OFFERT / vidéo",
-                                    "Adaptation Culturelle du Script",
-                                    "Empreinte Vocale OFFERTE"
-                                  ].map((f, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium">
-                                      <div className={`w-1.5 h-1.5 rounded-full ${isBlitzAvailable ? (i === 1 ? 'bg-gold animate-pulse' : 'bg-gold') : 'bg-chocolate/20'}`} />
-                                      <span className={isBlitzAvailable ? 'opacity-90' : 'opacity-70'}>{f}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                                <button 
-                                  onClick={() => { if (isBlitzAvailable) { setCurrentView('contact'); setActiveNav('contact'); } }}
-                                  className={`w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-500 ${
-                                  isBlitzAvailable ? 'bg-gold text-chocolate hover:bg-white' : 'bg-white/10 text-white/30'
-                                }`}>
-                                  Lancer Blitz
-                                </button>
-                              </div>
-
-                              {/* Empire Growth Card */}
-                              <div className="p-6 md:p-10 rounded-[2.5rem] bg-white/40 border border-white/50 flex flex-col">                                <div className="mb-8">
-                                  <h3 className="text-xl md:text-2xl font-serif italic mb-2 text-chocolate">Empire Growth</h3>
-                                  <div className="flex items-baseline gap-1">
-                                    <span className="text-3xl md:text-4xl font-bold tracking-tighter">€2 490</span>
-                                    <span className="text-xs ml-1 opacity-40">/mois</span>
-                                  </div>
-                                  <p className="text-[10px] font-black uppercase tracking-widest text-chocolate/30">Volume Illimité</p>
-                                </div>
-                                <ul className="space-y-3 mb-10 flex-grow">
-                                  {[
-                                    "30 Vidéos / mois (jusqu'à 60s)",
-                                    "A/B Testing Hook Illimité",
-                                    "Expertise Scripting Local",
-                                    "Chef de Projet Dédié",
-                                    "Creative Strategy"
-                                  ].map((f, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-[12px] font-medium text-chocolate/70">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-chocolate/20" />
-                                      {f}
-                                    </li>
-                                  ))}
-                                </ul>
-                                <button 
-                                  onClick={() => { setCurrentView('contact'); setActiveNav('contact'); }}
-                                  className="w-full py-4 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white border border-chocolate/10 text-chocolate hover:bg-chocolate hover:text-cream transition-all duration-500"
-                                >
-                                  Contacter
-                                </button>
-                              </div>
-                            </>
-                          );
-                        })()}
-                      </div>
-
-                      {/* Risk Reversal Guarantee */}
-                      <div className="max-w-2xl mx-auto mt-12 bg-white/30 border border-chocolate/10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4 text-center md:text-left shadow-sm">
-                        <div className="w-12 h-12 rounded-full bg-gold/20 text-gold flex items-center justify-center shrink-0 border border-gold/30">
-                          <Sparkles size={20} />
-                        </div>
-                        <div>
-                          <p className="text-[11px] md:text-xs font-bold text-chocolate uppercase tracking-widest mb-1">Garantie Indétectable</p>
-                          <p className="text-[10px] md:text-[11px] text-chocolate/70 font-medium leading-relaxed">
-                            Si la synchronisation labiale n'est pas 100% naturelle et bluffante, nous régénérons votre vidéo gratuitement jusqu'à perfection absolue. Vous ne prenez aucun risque.
-                          </p>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Quote Section */}
-              <section className="pt-10 md:pt-16 pb-20 md:pb-32 px-6">
-                <div className="container text-center">
-                  <FadeInView>
-                    <h2 className="text-2xl md:text-6xl font-serif italic max-w-5xl mx-auto mb-10 md:mb-16 text-chocolate leading-snug">
-                      "Virae est une <span className="text-gold not-italic">révolution culturelle</span> pour notre distribution globale."
-                    </h2>
-                    <div className="flex flex-col items-center">
-                      <span className="text-[11px] md:text-sm font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-chocolate">Marc-Antoine D.</span>
-                      <span className="text-[9px] md:text-xs font-bold uppercase tracking-widest text-taupe mt-1">Global Creative Director, L'Oréal Paris</span>
-                    </div>
-                  </FadeInView>
-                </div>
-              </section>
-
-              {/* Footer Section */}
-              <footer className="bg-chocolate pt-20 md:pt-32 pb-12 text-cream rounded-t-[3rem] md:rounded-t-[4rem] relative overflow-hidden px-6">
-                <div className="container relative z-10">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-16 md:mb-24">
-                    {/* Brand Column */}
-                    <div className="flex flex-col gap-6 md:gap-8">
-                      <a href="#" className="font-serif text-[24px] md:text-[28px] font-black tracking-tighter text-cream group relative w-fit">
-                        VIRAE<span className="text-gold">.</span>
-                      </a>
-                      <p className="text-cream/50 text-sm leading-relaxed max-w-[240px] font-medium">
-                        L'intelligence artificielle au service de l'émotion humaine. Exportez votre vision sans limites.
-                      </p>
-                      <div className="flex gap-4">
-                        {['Instagram', 'LinkedIn', 'X'].map((social) => (
-                          <a key={social} href={`https://${social.toLowerCase()}.com`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-xs font-bold hover:bg-gold hover:border-gold hover:text-chocolate transition-all duration-500">
-                            {social[0]}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Navigation Column */}
-                    <div className="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-0 lg:col-span-2 lg:grid-cols-2">
-                      <div>
-                        <h4 className="text-gold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-[11px] font-black mb-6 md:mb-8">Navigation</h4>
-                        <ul className="space-y-3 md:space-y-4">
-                          {['Accueil', 'Expertise', 'Tarifs', 'Contact'].map((item) => (
-                            <li key={item}>
-                              <button 
-                                onClick={() => {
-                                  if (item === 'Contact') {
-                                    setCurrentView('contact');
-                                    setActiveNav('contact');
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                  } else {
-                                    setCurrentView('landing');
-                                    setActiveNav(item.toLowerCase());
-                                    setTimeout(() => {
-                                      if (item === 'Accueil') {
-                                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                                      } else {
-                                        const el = document.getElementById(item.toLowerCase());
-                                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                      }
-                                    }, 100);
-                                  }
-                                }}
-                                className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300 text-left"
-                              >
-                                {item}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-gold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-[11px] font-black mb-6 md:mb-8">Expertises</h4>
-                        <ul className="space-y-3 md:space-y-4">
-                          {['Clonage Vocal', 'Synchro Labiale', 'Transcréation UGC', 'Production Native'].map((item) => (
-                            <li key={item}>
-                              <button 
-                                onClick={() => {
-                                  setCurrentView('landing');
-                                  setActiveNav('expertise');
-                                  setTimeout(() => {
-                                    const el = document.getElementById('expertise');
-                                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                                  }, 100);
-                                }}
-                                className="text-cream/60 hover:text-gold text-sm font-medium transition-colors duration-300 text-left"
-                              >
-                                {item}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Contact Column */}
-                    <div>
-                      <h4 className="text-gold uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-[11px] font-black mb-6 md:mb-8">Contact</h4>
-                      <div className="space-y-6">
-                        <div>
-                          <p className="text-[9px] uppercase tracking-widest text-cream/30 mb-1">Collaboration</p>
-                          <a href="mailto:hello@virae.ai" className="text-base md:text-lg font-serif italic hover:text-gold transition-colors">hello@virae.ai</a>
-                        </div>
-                        <div>
-                          <p className="text-[9px] uppercase tracking-widest text-cream/30 mb-1">Bureaux</p>
-                          <p className="text-cream/60 text-sm leading-relaxed">
-                            80 Rue de Turenne,<br />75003 Paris, France
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Bar */}
-                  <div className="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
-                    <div className="text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase opacity-30 text-center md:text-left">
-                      © 2026 VIRAE INTELLIGENCE. TOUS DROITS RÉSERVÉS.
-                    </div>
-                    <div className="flex gap-6 md:gap-8">
-                      {['Mentions Légales', 'Confidentialité', 'Cookies'].map((item) => (
-                        <button 
-                          key={item} 
-                          onClick={() => alert(`Page "${item}" en cours de rédaction.`)}
-                          className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase opacity-30 hover:opacity-100 transition-opacity"
-                        >
-                          {item}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Background Decoration */}
-                <div className="absolute -bottom-24 -right-24 w-64 md:w-96 h-64 md:h-96 bg-gold/5 rounded-full blur-[80px] md:blur-[100px]" />
-                <div className="absolute -top-24 -left-24 w-48 md:w-72 h-48 md:h-72 bg-gold/5 rounded-full blur-[60px] md:blur-[80px]" />
-              </footer>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="contact"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Contact />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+            {renderView()}
+          </AnimatePresence>
+        </div>
+      </motion.div>
     </>
   );
 };

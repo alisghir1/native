@@ -46,7 +46,7 @@ const QualityCard = ({ icon: Icon, title, desc, delay, textColor, subTextColor, 
 
 const QualityControl = ({ textColor, subTextColor, borderColor, cardBg, iconBg, iconColor }) => {
   return (
-    <section className="pt-24 pb-12 md:pt-32 md:pb-16 px-6 relative overflow-hidden">
+    <section className="py-24 md:py-40 px-6 relative overflow-hidden">
       {/* Background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[120px] pointer-events-none" />
 
